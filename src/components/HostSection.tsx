@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Award, Star, ShieldCheck, MessageSquare, X, Check } from 'lucide-react';
+import React from 'react';
+import { Shield, Star, Award, GraduationCap, Lightbulb } from 'lucide-react';
 import { Host } from '../types';
 
 interface HostSectionProps {
@@ -7,211 +7,130 @@ interface HostSectionProps {
 }
 
 export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [isMessageSent, setIsMessageSent] = useState(false);
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) return;
-    setIsMessageSent(true);
-    setTimeout(() => {
-      setIsMessageSent(false);
-      setMessage('');
-      setIsContactModalOpen(false);
-    }, 1800);
-  };
-
   return (
     <section id="host-section" className="py-8 border-b border-[#EBEBEB]">
-      {/* Section Title (Change #5) */}
-      <h2 className="text-[22px] font-bold text-[#222222] mb-6">
-        Meet your host
-      </h2>
+      <h2 className="text-[22px] font-bold text-[#222222] mb-6">Meet your host</h2>
 
-      {/* Host Card: Completely about the host */}
-      <div className="bg-[#F7F7F7] border border-[#EBEBEB] rounded-3xl p-8 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          {/* Left: Avatar, Superhost Badge & Stats */}
-          <div className="md:col-span-5 flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-[#EBEBEB]">
-            <div className="relative mb-3">
-              <img
-                src={host.avatar}
-                alt={host.name}
-                className="w-24 h-24 rounded-full object-cover shadow-sm"
-              />
-              {host.isSuperhost && (
-                <div className="absolute -bottom-1 -right-1 bg-[#FF385C] text-white p-1.5 rounded-full shadow-md">
-                  <Award className="w-4 h-4" />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+        {/* Left Column: Mirashya Homes Profile Card */}
+        <div className="md:col-span-5 space-y-6">
+          <div className="bg-[#FFFFFF] border border-[#DDDDDD] rounded-3xl p-6 shadow-md">
+            <div className="flex items-center justify-between gap-4">
+              {/* Host Avatar & Name */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-full bg-[#18392b] text-[#f4e4c1] flex flex-col items-center justify-center p-2 border border-[#122b20] shadow-sm mb-3 select-none">
+                  <span className="text-[11px] font-black uppercase tracking-tighter text-center leading-tight">
+                    MIRASHYA
+                  </span>
+                  <span className="text-[8px] uppercase tracking-widest text-[#d8c397]">
+                    HOMES
+                  </span>
                 </div>
-              )}
-            </div>
+                <h3 className="text-xl font-black text-[#222222]">{host.name}</h3>
+                <span className="text-xs text-[#717171] font-semibold mt-0.5">
+                  Host
+                </span>
+              </div>
 
-            <h3 className="text-2xl font-bold text-[#222222]">{host.name}</h3>
-            <p className="text-sm font-semibold text-[#717171] mt-0.5">Superhost</p>
-
-            {/* Quick stats in card */}
-            <div className="grid grid-cols-3 divide-x divide-[#EBEBEB] w-full pt-6 mt-4 border-t border-[#EBEBEB] text-center">
-              <div>
-                <div className="font-bold text-lg text-[#222222]">{host.reviewsCount}</div>
-                <div className="text-[11px] text-[#717171]">Reviews</div>
-              </div>
-              <div>
-                <div className="font-bold text-lg text-[#222222] flex items-center justify-center gap-0.5">
-                  <span>{host.rating.toFixed(2)}</span>
-                  <Star className="w-3 h-3 fill-current text-[#222222]" />
-                </div>
-                <div className="text-[11px] text-[#717171]">Rating</div>
-              </div>
-              <div>
-                <div className="font-bold text-lg text-[#222222]">{host.yearsHosting}</div>
-                <div className="text-[11px] text-[#717171]">Years hosting</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Details, Bio & Message Host Option */}
-          <div className="md:col-span-7 space-y-4">
-            <h4 className="font-bold text-lg text-[#222222]">Host details</h4>
-            <div className="space-y-2 text-sm text-[#222222]">
-              <div>
-                <span className="font-semibold">Response rate: </span>
-                <span>{host.responseRate}</span>
-              </div>
-              <div>
-                <span className="font-semibold">Responds: </span>
-                <span>{host.responseTime}</span>
-              </div>
-              {host.languages && (
+              {/* Host Stats */}
+              <div className="space-y-3 text-right">
                 <div>
-                  <span className="font-semibold">Languages: </span>
-                  <span>{host.languages.join(', ')}</span>
-                </div>
-              )}
-            </div>
-
-            <p className="text-sm text-[#717171] leading-relaxed pt-2 border-t border-[#EBEBEB]">
-              {host.bio}
-            </p>
-
-            <div className="pt-2">
-              <button
-                onClick={() => setIsContactModalOpen(true)}
-                className="bg-white hover:bg-[#F7F7F7] text-[#222222] border border-[#222222] font-semibold text-sm px-6 py-3 rounded-xl transition-colors cursor-pointer active:scale-98 flex items-center gap-2"
-              >
-                <MessageSquare className="w-4 h-4 text-[#222222]" />
-                <span>Message host</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Below: Completely about the Co-hosts (Change #5) */}
-      {host.coHosts && host.coHosts.length > 0 && (
-        <div className="mb-8 pt-4">
-          <h3 className="font-bold text-lg text-[#222222] mb-4">Co-hosts</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {host.coHosts.map((cohost, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3.5 p-4 rounded-2xl border border-[#EBEBEB] bg-[#FAFAFA]"
-              >
-                <img
-                  src={cohost.avatar}
-                  alt={cohost.name}
-                  className="w-12 h-12 rounded-full object-cover border border-[#DDDDDD] shadow-xs shrink-0"
-                />
-                <div>
-                  <div className="text-base font-semibold text-[#222222]">{cohost.name}</div>
-                  <div className="text-xs text-[#717171] font-medium">{cohost.role || 'Co-host'}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Security notice */}
-      <div className="flex items-start gap-3 text-xs text-[#717171] pt-2">
-        <ShieldCheck className="w-5 h-5 text-[#FF385C] shrink-0" />
-        <p>
-          To protect your payment, never transfer money or communicate outside of the Airbnb website or app.
-        </p>
-      </div>
-
-      {/* Contact Host Modal */}
-      {isContactModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between p-6 border-b border-[#EBEBEB]">
-              <h3 className="text-xl font-bold text-[#222222]">Message {host.name}</h3>
-              <button
-                onClick={() => setIsContactModalOpen(false)}
-                className="p-2 text-[#222222] hover:bg-[#F7F7F7] rounded-full transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {isMessageSent ? (
-              <div className="p-8 text-center space-y-3">
-                <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
-                </div>
-                <h4 className="font-bold text-lg text-[#222222]">Message sent!</h4>
-                <p className="text-sm text-[#717171]">
-                  {host.name} usually responds within an hour. You'll receive an email notification when they reply.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSendMessage} className="p-6 space-y-4">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={host.avatar}
-                    alt={host.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <h4 className="font-bold text-sm text-[#222222]">{host.name}</h4>
-                    <p className="text-xs text-[#717171]">Typically responds {host.responseTime}</p>
+                  <div className="text-xl font-black text-[#222222]">
+                    {host.reviewsCount.toLocaleString()}
                   </div>
+                  <div className="text-[11px] text-[#717171]">Reviews</div>
                 </div>
-
+                <div className="h-px bg-[#EBEBEB]" />
                 <div>
-                  <label className="block text-xs font-bold uppercase text-[#717171] mb-1">
-                    Your message
-                  </label>
-                  <textarea
-                    rows={4}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={`Hi ${host.name}, I'm planning a stay and have a question about...`}
-                    required
-                    className="w-full border border-[#DDDDDD] rounded-xl p-3 text-sm text-[#222222] focus:outline-hidden focus:border-[#222222] resize-none"
-                  />
+                  <div className="text-xl font-black text-[#222222] flex items-center justify-end gap-1">
+                    <span>{host.rating.toFixed(2)}</span>
+                    <Star className="w-3.5 h-3.5 fill-current text-[#222222]" />
+                  </div>
+                  <div className="text-[11px] text-[#717171]">Rating</div>
                 </div>
+                <div className="h-px bg-[#EBEBEB]" />
+                <div>
+                  <div className="text-xl font-black text-[#222222]">
+                    {host.yearsHosting}
+                  </div>
+                  <div className="text-[11px] text-[#717171]">Years hosting</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <div className="flex justify-end gap-2 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsContactModalOpen(false)}
-                    className="px-4 py-2.5 text-sm font-semibold text-[#717171] hover:text-[#222222]"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-[#222222] hover:bg-black text-white px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors cursor-pointer"
-                  >
-                    Send message
-                  </button>
-                </div>
-              </form>
-            )}
+          {/* Quick Host Details below card */}
+          <div className="space-y-3 text-sm text-[#222222]">
+            <div className="flex items-center gap-3">
+              <Lightbulb className="w-5 h-5 text-[#222222] shrink-0" />
+              <span>Born in the 80s</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <GraduationCap className="w-5 h-5 text-[#222222] shrink-0" />
+              <span>Where I went to school: NICMAR GOA</span>
+            </div>
           </div>
         </div>
-      )}
+
+        {/* Right Column: Co-Hosts & Host Details */}
+        <div className="md:col-span-7 space-y-6">
+          {/* Co-Hosts */}
+          {host.coHosts && host.coHosts.length > 0 && (
+            <div>
+              <h3 className="font-bold text-base text-[#222222] mb-3">Co-Hosts</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {host.coHosts.map((coHost, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5">
+                    {coHost.avatar ? (
+                      <img
+                        src={coHost.avatar}
+                        alt={coHost.name}
+                        className="w-9 h-9 rounded-full object-cover shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-[#EBEBEB] text-[#222222] font-bold text-xs flex items-center justify-center shrink-0">
+                        {coHost.initial || coHost.name.charAt(0)}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-[#222222] truncate">
+                      {coHost.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Host Response Details */}
+          <div className="space-y-1">
+            <h3 className="font-bold text-base text-[#222222]">Host details</h3>
+            <p className="text-sm text-[#222222]">
+              Response rate: {host.responseRate}
+            </p>
+            <p className="text-sm text-[#222222]">
+              Responds {host.responseTime}
+            </p>
+          </div>
+
+          {/* Message Host Button */}
+          <div>
+            <button
+              onClick={() => alert('Message Host dialog: Sending message to Mirashya Homes...')}
+              className="border border-[#222222] bg-[#222222] text-white hover:bg-black font-semibold text-sm px-6 py-3 rounded-lg transition-colors cursor-pointer active:scale-98"
+            >
+              Message host
+            </button>
+          </div>
+
+          {/* Safety & Protection Notice */}
+          <div className="pt-2 flex items-start gap-3 text-xs text-[#717171]">
+            <Shield className="w-4 h-4 text-[#FF385C] shrink-0 mt-0.5" />
+            <p>
+              To help protect your payment, always use Airbnb to send money and communicate with hosts.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

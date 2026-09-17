@@ -9,13 +9,11 @@ export const Footer: React.FC = () => {
         <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-sm text-[#717171]">
           <a href="#" className="hover:underline hover:text-[#222222]">Airbnb</a>
           <ChevronRight className="w-3 h-3" />
-          <a href="#" className="hover:underline hover:text-[#222222]">United States</a>
+          <a href="#" className="hover:underline hover:text-[#222222]">India</a>
           <ChevronRight className="w-3 h-3" />
-          <a href="#" className="hover:underline hover:text-[#222222]">California</a>
+          <a href="#" className="hover:underline hover:text-[#222222]">Goa</a>
           <ChevronRight className="w-3 h-3" />
-          <a href="#" className="hover:underline hover:text-[#222222]">Los Angeles County</a>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-[#222222] font-semibold">Malibu</span>
+          <span className="text-[#222222] font-semibold">Candolim</span>
         </nav>
       </div>
 
@@ -87,14 +85,14 @@ export const Footer: React.FC = () => {
 
         <div className="flex items-center gap-6 font-semibold">
           <button
-            onClick={() => alert('Language options')}
+            onClick={() => alert('Language: English (IN)')}
             className="flex items-center gap-2 hover:underline cursor-pointer"
           >
             <Globe className="w-4 h-4" />
             <span>English (IN)</span>
           </button>
           <button
-            onClick={() => alert('Currency options')}
+            onClick={() => alert('Currency: ₹ INR')}
             className="hover:underline cursor-pointer"
           >
             ₹ INR

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Key, Calendar, ChevronRight, X, Star, Languages } from 'lucide-react';
+import { Sparkles, Award, Key, Calendar, ChevronRight, X, Star, Sun, Fan, DoorClosed, Umbrella } from 'lucide-react';
 import { ListingData } from '../types';
-import { LaurelLeftSVG, LaurelRightSVG } from './GuestFavoriteSection';
+import { LaurelBranchLeft, LaurelBranchRight } from './LaurelIcon';
 
 interface PropertyOverviewProps {
   listing: ListingData;
@@ -11,12 +11,12 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
   const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
   const [isShowingOriginal, setIsShowingOriginal] = useState(false);
 
-  // Original text representation for translation toggle
-  const originalDescription = `Apresentamos Villa Sol de Goa: uma propriedade magnífica e exclusiva em Little Vagator. Tetos altos em madeira de teca, varanda colonial portuguesa e piscina de borda infinita privativa. Totalmente equipada com chef particular opcional e comodidades de luxo.`;
+  const originalDescription = `🌴 Planeje suas férias relaxantes no Amor De Goa por Mirashya Homes! ✨
+Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa para o descanso perfeito. Desfrute de WiFi de alta velocidade 📶, Smart TV 📺, conforto para animais de estimação 🐾 e interiores elegantes. A apenas alguns minutos de Candolim`;
 
   return (
     <div className="space-y-6">
-      {/* Property Title & Room counts (Change #5: 'bathrooms' in natural number) */}
+      {/* Property Title & Room counts */}
       <div className="pb-6 border-b border-[#EBEBEB]">
         <h2 className="text-[22px] font-bold text-[#222222]">
           {listing.propertyType} in {listing.city}, {listing.country}
@@ -24,28 +24,28 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         <ol className="flex items-center gap-1.5 text-sm text-[#222222] mt-1 list-none p-0 font-normal">
           <li>{listing.guestsCount} guests</li>
           <li aria-hidden="true">·</li>
-          <li>{listing.bedroomsCount} bedrooms</li>
+          <li>{listing.bedroomsCount} bedroom</li>
           <li aria-hidden="true">·</li>
-          <li>{listing.bedsCount} beds</li>
+          <li>{listing.bedsCount} bed</li>
           <li aria-hidden="true">·</li>
-          <li>{listing.bathsCount} bathrooms</li>
+          <li>{listing.bathsCount} bathroom</li>
         </ol>
       </div>
 
-      {/* Official Airbnb Guest Favorite Banner with Laurel Leaves */}
+      {/* Official Airbnb Guest Favorite Banner */}
       {listing.isGuestFavorite && (
         <div className="border border-[#DDDDDD] rounded-2xl p-5 flex items-center justify-between bg-white shadow-xs hover:border-[#B0B0B0] transition-colors">
           <div className="flex items-center gap-3">
-            <LaurelLeftSVG className="w-7 h-11 text-[#222222] shrink-0" />
+            <LaurelBranchLeft className="w-6 h-10 text-[#222222] shrink-0" />
             <div>
               <div className="font-extrabold text-[#222222] text-lg leading-tight">
-                Guest favorite
+                Guest favourite
               </div>
               <p className="text-sm text-[#717171] leading-snug mt-0.5">
                 One of the most loved homes on Airbnb, according to guests
               </p>
             </div>
-            <LaurelRightSVG className="w-7 h-11 text-[#222222] shrink-0" />
+            <LaurelBranchRight className="w-6 h-10 text-[#222222] shrink-0" />
           </div>
 
           <div className="flex items-center gap-4 pl-4 shrink-0 text-right">
@@ -68,38 +68,36 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         </div>
       )}
 
-      {/* Hosted by part is placed AFTER the Guest favorite card (Change #4) */}
+      {/* Host row with green Mirashya logo avatar */}
       <div className="flex items-center gap-4 py-5 border-b border-[#EBEBEB]">
         <div className="relative shrink-0">
-          <img
-            src={listing.host.avatar}
-            alt={listing.host.name}
-            className="w-14 h-14 rounded-full object-cover border border-[#EBEBEB]"
-          />
-          {listing.host.isSuperhost && (
-            <div
-              className="absolute -bottom-1 -right-1 bg-[#FF385C] text-white p-1 rounded-full shadow-xs"
-              title="Superhost"
-            >
-              <Award className="w-3 h-3" />
-            </div>
-          )}
+          <div className="w-14 h-14 rounded-full bg-[#18392b] text-[#f4e4c1] flex flex-col items-center justify-center p-1.5 border border-[#122b20] shadow-xs select-none">
+            <span className="text-[9px] font-black uppercase tracking-tighter text-center leading-tight">
+              MIRASHYA
+            </span>
+            <span className="text-[6.5px] uppercase tracking-widest text-[#d8c397]">
+              HOMES
+            </span>
+          </div>
         </div>
         <div>
           <h3 className="font-bold text-base text-[#222222]">
             Hosted by {listing.host.name}
           </h3>
           <p className="text-sm text-[#717171]">
-            {listing.host.isSuperhost ? 'Superhost' : 'Host'} · {listing.host.yearsHosting} years hosting
+            {listing.host.yearsHosting} years hosting
           </p>
         </div>
       </div>
 
-      {/* Key Highlights (Duplicate Guest Favorite highlight removed as requested in #4) */}
+      {/* Key Highlights */}
       <div className="space-y-6 py-6 border-b border-[#EBEBEB]">
         {listing.highlights.map((highlight, index) => (
           <div key={index} className="flex items-start gap-4">
             <div className="text-[#222222] shrink-0 mt-0.5">
+              {highlight.icon === 'sun' && <Umbrella className="w-6 h-6 stroke-[1.8]" />}
+              {highlight.icon === 'fan' && <Fan className="w-6 h-6 stroke-[1.8]" />}
+              {highlight.icon === 'door' && <DoorClosed className="w-6 h-6 stroke-[1.8]" />}
               {highlight.icon === 'sparkles' && <Sparkles className="w-6 h-6 stroke-[1.8]" />}
               {highlight.icon === 'award' && <Award className="w-6 h-6 stroke-[1.8]" />}
               {highlight.icon === 'key' && <Key className="w-6 h-6 stroke-[1.8]" />}
@@ -115,29 +113,24 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         ))}
       </div>
 
-      {/* Automatic Translation Info Box (Change #2) */}
-      <div className="flex items-center gap-3 p-4 rounded-2xl border border-[#EBEBEB] bg-[#F7F7F7] text-sm text-[#222222]">
-        <Languages className="w-5 h-5 text-[#222222] shrink-0" />
-        <div className="flex-1">
-          <span>Some info has been automatically translated.{' '}</span>
-          <button
-            type="button"
-            onClick={() => setIsShowingOriginal((prev) => !prev)}
-            className="font-bold underline text-[#222222] hover:text-black cursor-pointer inline transition-opacity"
-          >
-            {isShowingOriginal ? 'Show translated' : 'Show original'}
-          </button>
-        </div>
+      {/* Automatic Translation Info Box */}
+      <div className="text-sm text-[#717171]">
+        <span>Some info has been automatically translated. </span>
+        <button
+          type="button"
+          onClick={() => setIsShowingOriginal((prev) => !prev)}
+          className="font-bold underline text-[#222222] hover:text-black cursor-pointer inline transition-opacity"
+        >
+          {isShowingOriginal ? 'Show translated' : 'Show original'}
+        </button>
       </div>
 
-      {/* Description Section without Title / Section Name (Change #6) and with smooth fading effect */}
-      <div className="py-6 border-b border-[#EBEBEB]">
+      {/* Description Section with Show More */}
+      <div className="py-4 border-b border-[#EBEBEB]">
         <div className="relative">
-          <div className="text-base text-[#222222] leading-relaxed whitespace-pre-line max-h-[140px] overflow-hidden">
+          <div className="text-base text-[#222222] leading-relaxed whitespace-pre-line">
             {isShowingOriginal ? originalDescription : listing.description}
           </div>
-          {/* Smooth fading gradient over the last line without ellipsis '...' */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
         </div>
 
         <button

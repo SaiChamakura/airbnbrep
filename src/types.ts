@@ -12,6 +12,7 @@ export interface Amenity {
   category: string;
   iconName: string;
   highlight?: boolean;
+  notReported?: boolean;
   description?: string;
 }
 
@@ -19,6 +20,7 @@ export interface Review {
   id: string;
   authorName: string;
   authorAvatar: string;
+  authorInitial?: string;
   authorLocation?: string;
   yearsOnAirbnb: string;
   date: string;
@@ -37,6 +39,7 @@ export interface Bedroom {
 export interface CoHost {
   name: string;
   avatar: string;
+  initial?: string;
   role?: string;
 }
 
@@ -50,6 +53,8 @@ export interface Host {
   yearsHosting: number;
   responseRate: string;
   responseTime: string;
+  education?: string;
+  bornIn?: string;
   bio: string;
   work?: string;
   languages?: string[];
@@ -85,7 +90,7 @@ export interface ListingData {
   guestsCount: number;
   bedroomsCount: number;
   bedsCount: number;
-  bathsCount: number; // Natural integer e.g. 5
+  bathsCount: number;
   pricePerNight: number;
   cleaningFee: number;
   serviceFee: number;

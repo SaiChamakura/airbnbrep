@@ -9,7 +9,7 @@ export const SleepingArrangements: React.FC<SleepingArrangementsProps> = ({ bedr
   return (
     <section className="py-8 border-b border-[#EBEBEB]">
       <h2 className="text-[22px] font-bold text-[#222222] mb-6">Where you'll sleep</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
         {bedrooms.map((room) => (
           <div
             key={room.id}

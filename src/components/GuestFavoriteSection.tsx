@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkles, ShieldCheck, Key, MessageSquare, MapPin, Tag, Star } from 'lucide-react';
+import { Sparkles, CheckCircle2, Key, MessageSquare, MapPin, Tag } from 'lucide-react';
+import { LaurelBranchLeft, LaurelBranchRight } from './LaurelIcon';
 
 interface GuestFavoriteSectionProps {
   rating: number;
@@ -14,131 +15,114 @@ interface GuestFavoriteSectionProps {
   };
 }
 
-// Official Airbnb Laurel Wreath SVGs
-export const LaurelLeftSVG: React.FC<{ className?: string }> = ({ className = 'w-10 h-16' }) => (
-  <svg
-    viewBox="0 0 40 70"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M36 68c-1.8-6-4.5-12.2-8.5-17.5-4-5.3-9-9.8-13.8-14.8-4.7-4.9-8.5-11-9.5-17.7-.6-4.3.2-8.8 2.2-12.6C8.4 1.5 12 0 16 0c.5 3-1 6-2.5 8.5-2.2 3.8-5 7.2-7.5 11-3.2 5-5.2 10.7-5.5 16.5-.4 6 1.3 12 4.2 17.2 3.2 5.6 7.8 10.2 12.8 14.5 2.7 2.3 5.5 4.5 8.5 6.3z" />
-    <path d="M28 20c-3-3-7-4.5-11-4 1.5 3 4 5.5 7 6.5 2 .7 4.2.2 4-2.5z" />
-    <path d="M34 32c-3.5-2-7.5-2.5-11-1 1.2 3 3.5 5.5 6.5 6.5 2.2.8 4.7 0 4.5-5.5z" />
-    <path d="M37 46c-3.8-1.5-8-1-11.5 1 1 3 3 5.5 6 6.5 2.5.8 5.5-.2 5.5-7.5z" />
-  </svg>
-);
-
-export const LaurelRightSVG: React.FC<{ className?: string }> = ({ className = 'w-10 h-16' }) => (
-  <svg
-    viewBox="0 0 40 70"
-    fill="currentColor"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M4 68c1.8-6 4.5-12.2 8.5-17.5 4-5.3 9-9.8 13.8-14.8 4.7-4.9 8.5-11 9.5-17.7.6-4.3-.2-8.8-2.2-12.6C31.6 1.5 28 0 24 0c-.5 3 1 6 2.5 8.5 2.2 3.8 5 7.2 7.5 11 3.2 5 5.2 10.7 5.5 16.5.4 6-1.3 12-4.2 17.2-3.2 5.6-7.8 10.2-12.8 14.5-2.7 2.3-5.5 4.5-8.5 6.3z" />
-    <path d="M12 20c3-3 7-4.5 11-4-1.5 3-4 5.5-7 6.5-2 .7-4.2.2-4-2.5z" />
-    <path d="M6 32c3.5-2 7.5-2.5 11-1-1.2 3-3.5 5.5-6.5 6.5-2.2.8-4.7 0-4.5-5.5z" />
-    <path d="M3 46c3.8-1.5 8-1 11.5 1-1 3-3 5.5-6 6.5-2.5.8-5.5-.2-5.5-7.5z" />
-  </svg>
-);
-
 export const GuestFavoriteSection: React.FC<GuestFavoriteSectionProps> = ({
   rating,
   reviewCount,
   ratingsBreakdown,
 }) => {
   return (
-    <section className="py-10 border-b border-[#EBEBEB]">
-      {/* Huge Guest Favorite Centerpiece (Change #11: Rating on top flanked by laurels, then text) */}
+    <section className="pt-12 pb-6 border-b border-[#EBEBEB]">
+      {/* Huge Guest Favorite Centerpiece with Authentic Laurel Wreath */}
       <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto mb-10">
-        <div className="flex items-center justify-center gap-3 text-[#222222] mb-2">
-          <LaurelLeftSVG className="w-9 h-14 text-[#222222]" />
-          <div className="text-4xl md:text-5xl font-black tracking-tight text-[#222222] px-1">
+        <div className="flex items-center justify-center gap-3 md:gap-5 text-[#222222] mb-3">
+          <LaurelBranchLeft className="w-10 h-16 md:w-14 md:h-24 text-[#222222]" />
+          <div className="text-6xl md:text-7xl font-extrabold tracking-tight text-[#222222] px-2 font-serif select-none">
             {rating.toFixed(2)}
           </div>
-          <LaurelRightSVG className="w-9 h-14 text-[#222222]" />
+          <LaurelBranchRight className="w-10 h-16 md:w-14 md:h-24 text-[#222222]" />
         </div>
 
-        <div className="flex items-center justify-center gap-0.5 text-[#222222] mb-3">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-current text-[#222222]" />
-          ))}
-        </div>
-
-        <h2 className="text-2xl md:text-3xl font-extrabold text-[#222222] mb-1">
-          Guest favorite
+        <h2 className="text-2xl md:text-3xl font-bold text-[#222222] mb-2">
+          Guest favourite
         </h2>
 
-        <p className="text-base text-[#717171] max-w-md mx-auto">
-          One of the most loved homes on Airbnb based on ratings, reviews, and reliability
+        <p className="text-base text-[#717171] max-w-md mx-auto leading-relaxed">
+          This home is a guest favourite based on ratings, reviews and reliability
         </p>
 
-        <div className="mt-4 text-sm font-semibold text-[#717171]">
-          <span className="text-[#222222] font-bold text-lg">{reviewCount}</span> Reviews
-        </div>
+        <button
+          onClick={() => alert('Airbnb guest favorite badge criteria: top 5% of listings on Airbnb based on ratings, reviews, and reliability.')}
+          className="mt-3 text-sm font-semibold text-[#222222] underline hover:text-black cursor-pointer"
+        >
+          How reviews work
+        </button>
       </div>
 
-      {/* 6 Category Rating Cards in a Horizontal Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 sm:divide-x divide-[#EBEBEB] border-y border-[#EBEBEB] py-6">
+      {/* 6 Category Rating Cards + Overall Rating Breakdown */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#EBEBEB] border-t border-[#EBEBEB] pt-6 pb-2">
+        {/* Overall rating bar */}
+        <div className="p-3 flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222] mb-1">Overall rating</div>
+          <div className="space-y-1 my-2 text-[11px] text-[#717171]">
+            {[
+              { num: 5, w: '95%' },
+              { num: 4, w: '5%' },
+              { num: 3, w: '0%' },
+              { num: 2, w: '0%' },
+              { num: 1, w: '0%' },
+            ].map((row) => (
+              <div key={row.num} className="flex items-center gap-1.5">
+                <span className="w-2">{row.num}</span>
+                <div className="flex-1 bg-[#EBEBEB] h-1 rounded-full overflow-hidden">
+                  <div className="bg-[#222222] h-full" style={{ width: row.w }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Cleanliness */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Overall rating</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Cleanliness</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.cleanliness.toFixed(1)}
           </div>
-          <Sparkles className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Cleanliness</div>
+          <Sparkles className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
 
         {/* Accuracy */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Accuracy</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Accuracy</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.accuracy.toFixed(1)}
           </div>
-          <ShieldCheck className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Accuracy</div>
+          <CheckCircle2 className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
 
         {/* Check-in */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Check-in</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Check-in</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.checkIn.toFixed(1)}
           </div>
-          <Key className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Check-in</div>
+          <Key className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
 
         {/* Communication */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Communication</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Communication</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.communication.toFixed(1)}
           </div>
-          <MessageSquare className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Communication</div>
+          <MessageSquare className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
 
         {/* Location */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Location</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Location</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.location.toFixed(1)}
           </div>
-          <MapPin className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Location</div>
+          <MapPin className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
 
         {/* Value */}
-        <div className="p-4 text-center flex flex-col items-center justify-between">
-          <div className="text-sm font-semibold text-[#222222] mb-2">Value</div>
-          <div className="text-xl font-bold text-[#222222] mb-2">
+        <div className="p-3 text-left flex flex-col justify-between">
+          <div className="text-xs font-semibold text-[#222222]">Value</div>
+          <div className="text-lg font-bold text-[#222222] my-1">
             {ratingsBreakdown.value.toFixed(1)}
           </div>
-          <Tag className="w-7 h-7 text-[#222222] stroke-[1.8]" />
-          <div className="text-xs text-[#717171] mt-2 font-medium">Value</div>
+          <Tag className="w-6 h-6 text-[#222222] stroke-[1.8]" />
         </div>
       </div>
     </section>

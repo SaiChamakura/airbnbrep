@@ -8,13 +8,14 @@ import { PropertyOverview } from './components/PropertyOverview';
 import { SleepingArrangements } from './components/SleepingArrangements';
 import { AmenitiesSection } from './components/AmenitiesSection';
 import { CalendarSection } from './components/CalendarSection';
-import { ReserveModal } from './components/ReserveModal';
+import { BookingCard } from './components/BookingCard';
 import { GuestFavoriteSection } from './components/GuestFavoriteSection';
 import { ReviewsSection } from './components/ReviewsSection';
 import { LocationSection } from './components/LocationSection';
 import { HostSection } from './components/HostSection';
 import { ThingsToKnowSection } from './components/ThingsToKnowSection';
 import { MoreStaysSection } from './components/MoreStaysSection';
+import { Footer } from './components/Footer';
 import { PhotoTourModal } from './components/PhotoTourModal';
 import { LightboxModal } from './components/LightboxModal';
 import { ShareModal } from './components/ShareModal';
@@ -41,7 +42,7 @@ export const App: React.FC = () => {
     return false;
   });
 
-  // Wishlist Toast state (Change #3)
+  // Wishlist Toast state
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Scroll detection for upper bar transformation
@@ -53,7 +54,6 @@ export const App: React.FC = () => {
   const [isPhotoTourOpen, setIsPhotoTourOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -147,24 +147,9 @@ export const App: React.FC = () => {
     }
   };
 
-  // Calculate nights and price for reserve modal
-  const nightsCount =
-    checkInDate && checkOutDate
-      ? Math.max(
-          1,
-          Math.round(
-            (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
-          )
-        )
-      : 5;
-  const basePrice = listingData.pricePerNight * nightsCount;
-  const cleaningFee = listingData.cleaningFee || 3500;
-  const serviceFee = listingData.serviceFee || 4200;
-  const totalPrice = basePrice + cleaningFee + serviceFee;
-
   return (
     <div className="min-h-screen bg-white text-[#222222] flex flex-col selection:bg-[#FF385C]/20 selection:text-[#FF385C]">
-      {/* Primary Header with Scrolled Upper Bar Transformation (Change #9) */}
+      {/* Primary Header with Scrolled Floating Bar */}
       <Header
         savedCount={isSaved ? 1 : 0}
         isScrolled={isScrolled}
@@ -173,7 +158,7 @@ export const App: React.FC = () => {
         pricePerNight={listingData.pricePerNight}
         rating={listingData.rating}
         reviewCount={listingData.reviewCount}
-        onReserveClick={() => setIsReserveModalOpen(true)}
+        onReserveClick={() => handleNavigateSection('calendar-section')}
       />
 
       {/* Main Page Container */}
@@ -193,61 +178,70 @@ export const App: React.FC = () => {
           onOpenLightbox={handleOpenLightbox}
         />
 
-        {/* Main Details Section without redundant reserve & prices after dates (Change #3) */}
-        <div className="max-w-[850px] space-y-2 pb-8">
-          {/* Property Overview, Host, Highlights, Description */}
-          <PropertyOverview listing={listingData} />
+        {/* 2-Column Split: Left Details + Right Sticky Booking Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 relative pb-8">
+          {/* Left Column: Property Overview, Sleeping, Amenities, Calendar */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-2">
+            <PropertyOverview listing={listingData} />
+            <SleepingArrangements bedrooms={listingData.bedrooms} />
+            <AmenitiesSection amenities={listingData.amenities} />
+            <CalendarSection
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
+              onSelectDate={handleDateSelection}
+              onClearDates={handleClearDates}
+              city={listingData.city}
+            />
+          </div>
 
-          {/* Sleeping arrangements with photos for each bedroom */}
-          <SleepingArrangements bedrooms={listingData.bedrooms} />
-
-          {/* Amenities Section */}
-          <AmenitiesSection amenities={listingData.amenities} />
-
-          {/* 2-Month Calendar & Date Picker with Connected Range Bands */}
-          <CalendarSection
-            checkInDate={checkInDate}
-            checkOutDate={checkOutDate}
-            onSelectDate={handleDateSelection}
-            onClearDates={handleClearDates}
-            city={listingData.city}
-          />
+          {/* Right Column: Sticky Booking Card & Promo Banner */}
+          <div className="hidden lg:block lg:col-span-5 xl:col-span-4 relative pt-6">
+            <BookingCard
+              listing={listingData}
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
+              onOpenCalendar={() => handleNavigateSection('calendar-section')}
+              guests={guests}
+              onUpdateGuests={setGuests}
+            />
+          </div>
         </div>
 
-        {/* Huge Guest Favorite Section after check-in date section (Change #10) */}
+        {/* Guest Favorite Centerpiece */}
         <GuestFavoriteSection
           rating={listingData.rating}
           reviewCount={listingData.reviewCount}
           ratingsBreakdown={listingData.ratingsBreakdown}
         />
 
-        {/* Single-Column Reviews Section (Change #11) */}
+        {/* Reviews Section */}
         <ReviewsSection
-          overallRating={listingData.rating}
-          totalReviews={listingData.reviewCount}
-          ratingsBreakdown={listingData.ratingsBreakdown}
           reviews={listingData.reviews}
+          overallRating={listingData.rating}
+          totalReviewsCount={listingData.reviewCount}
         />
 
         {/* Location & Map Section */}
-        <LocationSection
-          neighborhood={listingData.neighborhood}
-          city={listingData.city}
-          state={listingData.state}
-          country={listingData.country}
-        />
+        <LocationSection listing={listingData} />
 
         {/* Detailed Host Section */}
         <HostSection host={listingData.host} />
 
-        {/* Single-Column Things to Know Section (Change #12) */}
-        <ThingsToKnowSection listing={listingData} />
+        {/* Things to Know Section */}
+        <ThingsToKnowSection
+          cancellationPolicy={listingData.cancellationPolicy}
+          houseRules={listingData.houseRules}
+          safetyProperty={listingData.safetyProperty}
+        />
 
-        {/* More Stays Nearby Section (Change #13) */}
+        {/* More Stays Nearby Section */}
         <MoreStaysSection stays={nearbyStays} />
       </main>
 
-      {/* Floating Wishlist Toast Notification (Change #3) */}
+      {/* Footer */}
+      <Footer />
+
+      {/* Floating Wishlist Toast Notification */}
       {toastMessage && (
         <div
           role="status"
@@ -262,18 +256,6 @@ export const App: React.FC = () => {
           <span>{toastMessage}</span>
         </div>
       )}
-
-      {/* Interactive Reservation Flow Modal */}
-      <ReserveModal
-        isOpen={isReserveModalOpen}
-        onClose={() => setIsReserveModalOpen(false)}
-        listing={listingData}
-        checkInDate={checkInDate}
-        checkOutDate={checkOutDate}
-        guests={guests}
-        totalPrice={totalPrice}
-        nightsCount={nightsCount}
-      />
 
       {/* View 2: Full-screen Photo Tour Modal */}
       <PhotoTourModal

@@ -7,18 +7,17 @@ interface MoreStaysSectionProps {
 }
 
 export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [savedStayIds, setSavedStayIds] = useState<Record<string, boolean>>({});
 
-  const itemsPerPage = 3;
-  const totalPages = Math.ceil(stays.length / itemsPerPage);
+  const totalPages = 2;
 
   const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(0, prev - 1));
+    setCurrentPage((prev) => Math.max(1, prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
   };
 
   const toggleSaveStay = (id: string, e: React.MouseEvent) => {
@@ -29,33 +28,24 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
     }));
   };
 
-  // Slice stays for the current minipage
-  const displayedStays = stays.slice(
-    currentPage * itemsPerPage,
-    currentPage * itemsPerPage + itemsPerPage
-  );
-
   return (
     <section className="py-12 border-b border-[#EBEBEB]">
-      {/* Header with Title and Arrow-only Controls */}
+      {/* Header with Title and Pagination Controls */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-[22px] font-bold text-[#222222]">
             More stays nearby
           </h2>
-          <p className="text-sm text-[#717171] mt-1">
-            Explore similar coastal villas in and around North Goa
-          </p>
         </div>
 
-        {/* Arrow-only Navigation Controls (Change #6) */}
+        {/* Pagination Controls */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-[#717171] mr-1 hidden sm:inline">
-            {currentPage + 1} / {totalPages}
+          <span className="text-xs font-semibold text-[#222222] mr-1">
+            {currentPage}/{totalPages}
           </span>
           <button
             onClick={handlePrev}
-            disabled={currentPage === 0}
+            disabled={currentPage === 1}
             aria-label="Previous stays"
             className="w-8 h-8 rounded-full border border-[#DDDDDD] flex items-center justify-center text-[#222222] hover:border-black disabled:opacity-30 disabled:hover:border-[#DDDDDD] disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95 bg-white"
           >
@@ -63,7 +53,7 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
           </button>
           <button
             onClick={handleNext}
-            disabled={currentPage >= totalPages - 1}
+            disabled={currentPage >= totalPages}
             aria-label="Next stays"
             className="w-8 h-8 rounded-full border border-[#DDDDDD] flex items-center justify-center text-[#222222] hover:border-black disabled:opacity-30 disabled:hover:border-[#DDDDDD] disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95 bg-white"
           >
@@ -72,15 +62,15 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
         </div>
       </div>
 
-      {/* 3 Stays Grid for current minipage */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-300">
-        {displayedStays.map((stay) => {
+      {/* 5 Stays Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {stays.map((stay) => {
           const isSaved = !!savedStayIds[stay.id];
 
           return (
             <div
               key={stay.id}
-              className="group cursor-pointer flex flex-col space-y-3"
+              className="group cursor-pointer flex flex-col space-y-2.5"
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
@@ -98,46 +88,37 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
                 <button
                   onClick={(e) => toggleSaveStay(stay.id, e)}
                   aria-label={isSaved ? 'Remove from saved' : 'Save this listing'}
-                  className="absolute top-3 right-3 p-2 text-white hover:scale-110 active:scale-95 transition-transform cursor-pointer drop-shadow-md"
+                  className="absolute top-2.5 right-2.5 p-1.5 text-white hover:scale-110 active:scale-95 transition-transform cursor-pointer drop-shadow-md"
                 >
                   <Heart
-                    className={`w-6 h-6 stroke-[2] ${
+                    className={`w-5 h-5 stroke-[2] ${
                       isSaved
                         ? 'fill-[#FF385C] text-[#FF385C] stroke-[#FF385C]'
                         : 'text-white fill-black/30'
                     }`}
                   />
                 </button>
-
-                {/* Guest Favorite Badge */}
-                {stay.isGuestFavorite && (
-                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[#222222] text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow-xs">
-                    Guest favorite
-                  </div>
-                )}
               </div>
 
               {/* Listing Details */}
-              <div className="space-y-1">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-bold text-sm text-[#222222] line-clamp-1 group-hover:underline">
+              <div className="space-y-0.5 text-xs">
+                <div className="flex items-start justify-between gap-1">
+                  <h3 className="font-bold text-[#222222] line-clamp-1 group-hover:underline">
                     {stay.title}
                   </h3>
-                  <div className="flex items-center gap-1 text-xs shrink-0 font-semibold text-[#222222]">
-                    <Star className="w-3.5 h-3.5 fill-current text-[#222222]" />
+                  <div className="flex items-center gap-0.5 shrink-0 font-semibold text-[#222222]">
+                    <Star className="w-3 h-3 fill-current text-[#222222]" />
                     <span>{stay.rating.toFixed(2)}</span>
                   </div>
                 </div>
 
-                <p className="text-xs text-[#717171] leading-tight">{stay.subtitle}</p>
-                <p className="text-xs text-[#717171]">{stay.dates}</p>
+                <p className="text-[#717171] line-clamp-1">{stay.subtitle}</p>
 
                 {/* Pricing in Indian Rupees ₹ */}
-                <div className="pt-1 text-sm">
-                  <span className="font-extrabold text-[#222222]">
+                <div className="pt-1">
+                  <span className="font-bold text-sm text-[#222222]">
                     ₹{stay.pricePerNight.toLocaleString('en-IN')}
-                  </span>{' '}
-                  <span className="text-[#222222] text-xs font-normal">night</span>
+                  </span>
                 </div>
               </div>
             </div>

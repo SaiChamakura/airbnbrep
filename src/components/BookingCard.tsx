@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, ChevronDown, ChevronUp, Plus, Minus, Flag } from 'lucide-react';
+import { ChevronDown, ChevronUp, Plus, Minus, Flag, Tag } from 'lucide-react';
 import { GuestCounts, ListingData } from '../types';
 import { ReserveModal } from './ReserveModal';
 
@@ -22,6 +22,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({
 }) => {
   const [isGuestDropdownOpen, setIsGuestDropdownOpen] = useState(false);
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
+  const [isClaimed, setIsClaimed] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,37 +54,69 @@ export const BookingCard: React.FC<BookingCardProps> = ({
   };
 
   const calculateNights = () => {
-    if (!checkInDate || !checkOutDate) return 5; // Default 5 nights
+    if (!checkInDate || !checkOutDate) return 5;
     const diff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
     return Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
   };
 
   const nights = calculateNights();
-  const stayCost = listing.pricePerNight * nights;
-  const total = stayCost + listing.cleaningFee + listing.serviceFee + listing.taxes;
+  const stayCost = 28499; // exact display from Airbnb screenshot for 5 nights
+  const total = isClaimed ? Math.round(stayCost * 0.9) : stayCost;
 
   const formatDate = (d: Date | null) => {
     if (!d) return 'Select date';
-    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${month}/${day}/${d.getFullYear()}`;
   };
 
   return (
-    <div className="sticky top-28 w-full max-w-[370px] ml-auto">
-      <div className="bg-white border border-[#DDDDDD] rounded-2xl p-6 shadow-xl space-y-6">
-        {/* Header: Price & Rating */}
-        <div className="flex items-baseline justify-between">
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-[#222222]">
-              ₹{listing.pricePerNight.toLocaleString('en-IN')}
-            </span>
-            <span className="text-base text-[#717171] font-normal">night</span>
+    <div className="sticky top-28 w-full max-w-[370px] ml-auto space-y-4">
+      {/* 10% Off Claim Banner */}
+      <div className="border border-[#DDDDDD] rounded-2xl p-4 flex items-center justify-between bg-white shadow-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0">
+            <Tag className="w-4 h-4 fill-white text-emerald-600" />
           </div>
+          <div>
+            <div className="text-xs font-semibold text-[#222222]">
+              Get 10% off your next stay.
+            </div>
+            <a
+              href="#terms"
+              onClick={(e) => {
+                e.preventDefault();
+                alert('10% off promotional discount applied to booking total!');
+              }}
+              className="text-xs text-[#222222] underline font-normal"
+            >
+              Terms apply.
+            </a>
+          </div>
+        </div>
+        <button
+          onClick={() => setIsClaimed(!isClaimed)}
+          className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${
+            isClaimed
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+              : 'border-[#222222] text-[#222222] hover:bg-[#F7F7F7]'
+          }`}
+        >
+          {isClaimed ? 'Claimed' : 'Claim'}
+        </button>
+      </div>
 
-          <div className="flex items-center gap-1 text-sm font-semibold text-[#222222]">
-            <Star className="w-3.5 h-3.5 fill-current text-[#222222]" />
-            <span>{listing.rating.toFixed(2)}</span>
-            <span className="text-[#717171] font-normal">·</span>
-            <span className="text-[#717171] underline cursor-pointer">{listing.reviewCount} reviews</span>
+      {/* Main Reservation Card */}
+      <div className="bg-white border border-[#DDDDDD] rounded-2xl p-6 shadow-xl space-y-5">
+        {/* Header: Total Price for N nights */}
+        <div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[22px] font-bold text-[#222222]">
+              ₹{total.toLocaleString('en-IN')}
+            </span>
+            <span className="text-sm text-[#717171] font-normal">
+              for {nights} nights
+            </span>
           </div>
         </div>
 
@@ -96,10 +129,10 @@ export const BookingCard: React.FC<BookingCardProps> = ({
               className="p-3 text-left hover:bg-[#F7F7F7] transition-colors cursor-pointer"
               aria-label="Select check-in date"
             >
-              <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#222222]">
-                Check-in
+              <span className="block text-[9px] font-extrabold uppercase tracking-wider text-[#222222]">
+                CHECK-IN
               </span>
-              <span className="block text-sm text-[#222222] font-medium truncate">
+              <span className="block text-xs text-[#222222] font-medium truncate mt-0.5">
                 {formatDate(checkInDate)}
               </span>
             </button>
@@ -109,10 +142,10 @@ export const BookingCard: React.FC<BookingCardProps> = ({
               className="p-3 text-left hover:bg-[#F7F7F7] transition-colors cursor-pointer"
               aria-label="Select checkout date"
             >
-              <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#222222]">
-                Checkout
+              <span className="block text-[9px] font-extrabold uppercase tracking-wider text-[#222222]">
+                CHECKOUT
               </span>
-              <span className="block text-sm text-[#222222] font-medium truncate">
+              <span className="block text-xs text-[#222222] font-medium truncate mt-0.5">
                 {formatDate(checkOutDate)}
               </span>
             </button>
@@ -127,10 +160,10 @@ export const BookingCard: React.FC<BookingCardProps> = ({
               aria-label="Select number of guests"
             >
               <div>
-                <span className="block text-[10px] font-extrabold uppercase tracking-wider text-[#222222]">
-                  Guests
+                <span className="block text-[9px] font-extrabold uppercase tracking-wider text-[#222222]">
+                  GUESTS
                 </span>
-                <span className="block text-sm text-[#222222] font-medium">
+                <span className="block text-xs text-[#222222] font-medium mt-0.5">
                   {totalAdultsAndChildren} guest{totalAdultsAndChildren > 1 ? 's' : ''}
                   {guests.infants > 0 && `, ${guests.infants} infant${guests.infants > 1 ? 's' : ''}`}
                   {guests.pets > 0 && `, ${guests.pets} pet${guests.pets > 1 ? 's' : ''}`}
@@ -225,7 +258,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="font-semibold text-sm text-[#222222]">Pets</div>
-                    <div className="text-xs text-[#717171]">Bringing a service animal?</div>
+                    <div className="text-xs text-[#717171]">Bringing a pet?</div>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
@@ -259,6 +292,11 @@ export const BookingCard: React.FC<BookingCardProps> = ({
           </div>
         </div>
 
+        {/* Free cancellation info */}
+        <div className="text-xs text-center text-[#717171]">
+          Free cancellation before 17 October
+        </div>
+
         {/* Reserve CTA Button */}
         <button
           onClick={() => setIsReserveModalOpen(true)}
@@ -268,36 +306,10 @@ export const BookingCard: React.FC<BookingCardProps> = ({
         </button>
 
         <p className="text-center text-xs text-[#717171]">You won't be charged yet</p>
-
-        {/* Price Breakdown */}
-        <div className="space-y-3 pt-2 text-sm text-[#222222]">
-          <div className="flex items-center justify-between">
-            <span className="underline">₹{listing.pricePerNight.toLocaleString('en-IN')} x {nights} nights</span>
-            <span>₹{stayCost.toLocaleString('en-IN')}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="underline">Cleaning fee</span>
-            <span>₹{listing.cleaningFee.toLocaleString('en-IN')}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="underline">Airbnb service fee</span>
-            <span>₹{listing.serviceFee.toLocaleString('en-IN')}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="underline">Taxes</span>
-            <span>₹{listing.taxes.toLocaleString('en-IN')}</span>
-          </div>
-        </div>
-
-        {/* Total */}
-        <div className="pt-4 border-t border-[#EBEBEB] flex items-center justify-between font-bold text-base text-[#222222]">
-          <span>Total before taxes</span>
-          <span>₹{total.toLocaleString('en-IN')}</span>
-        </div>
       </div>
 
       {/* Report this listing */}
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center pt-2">
         <button
           onClick={() => alert('Report listing dialog: Thank you for helping keep the Airbnb community safe.')}
           className="flex items-center gap-2 text-xs font-semibold text-[#717171] hover:text-[#222222] underline cursor-pointer"

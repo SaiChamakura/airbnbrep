@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Keyboard } from 'lucide-react';
 
 interface CalendarSectionProps {
   checkInDate: Date | null;
@@ -25,7 +25,7 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
   ];
 
   const calculateNights = () => {
-    if (!checkInDate || !checkOutDate) return null;
+    if (!checkInDate || !checkOutDate) return 5;
     const diff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
@@ -34,11 +34,11 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
 
   const formatDateRange = () => {
     if (checkInDate && checkOutDate) {
-      const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
-      return `${checkInDate.toLocaleDateString('en-US', opts)} – ${checkOutDate.toLocaleDateString('en-US', opts)}`;
+      const opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+      return `${checkInDate.toLocaleDateString('en-GB', opts)} - ${checkOutDate.toLocaleDateString('en-GB', opts)}`;
     }
     if (checkInDate) {
-      return `Check-in: ${checkInDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+      return `Check-in: ${checkInDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
     }
     return 'Add your travel dates for exact pricing';
   };
@@ -53,7 +53,7 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
   const renderMonthGrid = (m: typeof months[0]) => {
     const days = [];
     for (let i = 0; i < m.startDayOfWeek; i++) {
-      days.push(<div key={`blank-${i}`} className="h-11 w-full" />);
+      days.push(<div key={`blank-${i}`} className="h-10 w-full" />);
     }
     for (let day = 1; day <= m.daysInMonth; day++) {
       const date = new Date(m.year, m.month, day);
@@ -66,9 +66,8 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
       days.push(
         <div
           key={day}
-          className="relative h-11 w-full flex items-center justify-center"
+          className="relative h-10 w-full flex items-center justify-center"
         >
-          {/* Continuous cylinder background band for middle and boundary dates */}
           {status === 'between' && (
             <div
               className={`absolute inset-0 bg-[#F7F7F7] ${
@@ -88,7 +87,7 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
           <button
             disabled={isPast}
             onClick={() => onSelectDate(date)}
-            className={`h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all relative z-10 cursor-pointer ${
+            className={`h-9 w-9 rounded-full flex items-center justify-center text-xs font-semibold transition-all relative z-10 cursor-pointer ${
               status === 'start' || status === 'end'
                 ? 'bg-[#222222] text-white hover:bg-black shadow-xs'
                 : status === 'between'
@@ -111,14 +110,13 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
     <section id="calendar-section" className="py-8 border-b border-[#EBEBEB]">
       <div className="mb-6">
         <h2 className="text-[22px] font-bold text-[#222222]">
-          {nights ? `${nights} nights in ${city}` : 'Select check-in date'}
+          {nights} nights in {city}
         </h2>
         <p className="text-sm text-[#717171] mt-1">{formatDateRange()}</p>
       </div>
 
-      {/* 2-Month side by side layout */}
       <div className="relative">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-3">
           <button
             onClick={() => setCurrentMonthIndex(Math.max(0, currentMonthIndex - 1))}
             disabled={currentMonthIndex === 0}
@@ -145,22 +143,20 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
             (m, idx) =>
               m && (
                 <div key={idx} className="space-y-3">
-                  <h3 className="text-center font-bold text-base text-[#222222]">
+                  <h3 className="text-center font-bold text-sm text-[#222222]">
                     {m.name}
                   </h3>
 
-                  {/* Day headers */}
                   <div className="grid grid-cols-7 text-center text-xs font-semibold text-[#717171]">
-                    <div>Su</div>
-                    <div>Mo</div>
-                    <div>Tu</div>
-                    <div>We</div>
-                    <div>Th</div>
-                    <div>Fr</div>
-                    <div>Sa</div>
+                    <div>S</div>
+                    <div>M</div>
+                    <div>T</div>
+                    <div>W</div>
+                    <div>T</div>
+                    <div>F</div>
+                    <div>S</div>
                   </div>
 
-                  {/* Grid cells */}
                   <div className="grid grid-cols-7 text-center">
                     {renderMonthGrid(m)}
                   </div>
@@ -169,12 +165,21 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
           )}
         </div>
 
-        {/* Clear dates button moved BELOW the calendar (Change #8) */}
-        <div className="flex justify-end pt-4">
+        {/* Bottom actions: keyboard on left, clear dates on right */}
+        <div className="flex items-center justify-between pt-6">
+          <button
+            type="button"
+            onClick={() => alert('Use arrow keys to navigate the calendar')}
+            className="p-2 text-[#222222] hover:bg-[#F7F7F7] rounded-lg transition-colors cursor-pointer"
+            aria-label="Keyboard shortcuts"
+          >
+            <Keyboard className="w-5 h-5 text-[#222222]" />
+          </button>
+
           {(checkInDate || checkOutDate) && (
             <button
               onClick={onClearDates}
-              className="text-sm font-semibold text-[#222222] underline hover:text-black cursor-pointer p-1"
+              className="text-xs font-semibold text-[#222222] underline hover:text-black cursor-pointer p-1"
             >
               Clear dates
             </button>

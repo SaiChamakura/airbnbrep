@@ -8,7 +8,7 @@ interface AllReviewsModalProps {
   reviews: Review[];
   overallRating: number;
   totalReviews: number;
-  ratingsBreakdown: {
+  ratingsBreakdown?: {
     cleanliness: number;
     accuracy: number;
     communication: number;
@@ -24,7 +24,14 @@ export const AllReviewsModal: React.FC<AllReviewsModalProps> = ({
   reviews,
   overallRating,
   totalReviews,
-  ratingsBreakdown,
+  ratingsBreakdown = {
+    cleanliness: 5.0,
+    accuracy: 5.0,
+    communication: 5.0,
+    location: 4.8,
+    checkIn: 5.0,
+    value: 4.8,
+  },
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -186,15 +193,20 @@ export const AllReviewsModal: React.FC<AllReviewsModalProps> = ({
                 filteredReviews.map((review) => (
                   <div key={review.id} className="pt-6 first:pt-0 space-y-3">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={review.authorAvatar}
-                        alt={review.authorName}
-                        className="w-11 h-11 rounded-full object-cover"
-                      />
+                      {review.authorAvatar ? (
+                        <img
+                          src={review.authorAvatar}
+                          alt={review.authorName}
+                          className="w-11 h-11 rounded-full object-cover shrink-0"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-full bg-[#EBEBEB] text-[#222222] font-bold text-sm flex items-center justify-center shrink-0">
+                          {review.authorInitial || review.authorName.charAt(0)}
+                        </div>
+                      )}
                       <div>
                         <h4 className="font-bold text-sm text-[#222222]">{review.authorName}</h4>
                         <p className="text-xs text-[#717171]">
-                          {review.authorLocation && `${review.authorLocation} · `}
                           {review.yearsOnAirbnb && `${review.yearsOnAirbnb} · `}
                           {review.date}
                         </p>
