@@ -12,38 +12,20 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
 
   return (
     <div className="space-y-6">
-      {/* Property Title & Host Summary */}
-      <div className="flex items-start justify-between pb-6 border-b border-[#EBEBEB]">
-        <div>
-          <h2 className="text-[22px] font-bold text-[#222222]">
-            {listing.propertyType} hosted by {listing.host.name}
-          </h2>
-          <ol className="flex items-center gap-1.5 text-sm text-[#222222] mt-1 list-none p-0">
-            <li>{listing.guestsCount} guests</li>
-            <li aria-hidden="true">·</li>
-            <li>{listing.bedroomsCount} bedrooms</li>
-            <li aria-hidden="true">·</li>
-            <li>{listing.bedsCount} beds</li>
-            <li aria-hidden="true">·</li>
-            <li>{listing.bathsCount} baths</li>
-          </ol>
-        </div>
-
-        <div className="relative shrink-0">
-          <img
-            src={listing.host.avatar}
-            alt={listing.host.name}
-            className="w-14 h-14 rounded-full object-cover border border-[#EBEBEB]"
-          />
-          {listing.host.isSuperhost && (
-            <div
-              className="absolute -bottom-1 -right-1 bg-[#FF385C] text-white p-1 rounded-full shadow-xs"
-              title="Superhost"
-            >
-              <Award className="w-3.5 h-3.5" />
-            </div>
-          )}
-        </div>
+      {/* Property Title & Room counts (Change #5: 'bathrooms' in natural number) */}
+      <div className="pb-6 border-b border-[#EBEBEB]">
+        <h2 className="text-[22px] font-bold text-[#222222]">
+          {listing.propertyType} in {listing.city}, {listing.country}
+        </h2>
+        <ol className="flex items-center gap-1.5 text-sm text-[#222222] mt-1 list-none p-0 font-normal">
+          <li>{listing.guestsCount} guests</li>
+          <li aria-hidden="true">·</li>
+          <li>{listing.bedroomsCount} bedrooms</li>
+          <li aria-hidden="true">·</li>
+          <li>{listing.bedsCount} beds</li>
+          <li aria-hidden="true">·</li>
+          <li>{listing.bathsCount} bathrooms</li>
+        </ol>
       </div>
 
       {/* Official Airbnb Guest Favorite Banner with Laurel Leaves */}
@@ -82,7 +64,34 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         </div>
       )}
 
-      {/* Key Highlights */}
+      {/* Hosted by part is placed AFTER the Guest favorite card (Change #4) */}
+      <div className="flex items-center gap-4 py-5 border-b border-[#EBEBEB]">
+        <div className="relative shrink-0">
+          <img
+            src={listing.host.avatar}
+            alt={listing.host.name}
+            className="w-14 h-14 rounded-full object-cover border border-[#EBEBEB]"
+          />
+          {listing.host.isSuperhost && (
+            <div
+              className="absolute -bottom-1 -right-1 bg-[#FF385C] text-white p-1 rounded-full shadow-xs"
+              title="Superhost"
+            >
+              <Award className="w-3 h-3" />
+            </div>
+          )}
+        </div>
+        <div>
+          <h3 className="font-bold text-base text-[#222222]">
+            Hosted by {listing.host.name}
+          </h3>
+          <p className="text-sm text-[#717171]">
+            {listing.host.isSuperhost ? 'Superhost' : 'Host'} · {listing.host.yearsHosting} years hosting
+          </p>
+        </div>
+      </div>
+
+      {/* Key Highlights (Duplicate Guest Favorite highlight removed as requested in #4) */}
       <div className="space-y-6 py-6 border-b border-[#EBEBEB]">
         {listing.highlights.map((highlight, index) => (
           <div key={index} className="flex items-start gap-4">
@@ -102,18 +111,19 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         ))}
       </div>
 
-      {/* Note: AirCover section REMOVED as requested in change #3! */}
-
-      {/* Space Description with Emojis as requested in change #6 */}
-      <div className="py-6 border-b border-[#EBEBEB] space-y-4">
-        <h3 className="text-lg font-bold text-[#222222]">About this space</h3>
-        <div className="text-base text-[#222222] leading-relaxed whitespace-pre-line line-clamp-5">
-          {listing.description}
+      {/* Description Section without Title / Section Name (Change #6) and with smooth fading effect */}
+      <div className="py-6 border-b border-[#EBEBEB]">
+        <div className="relative">
+          <div className="text-base text-[#222222] leading-relaxed whitespace-pre-line max-h-[140px] overflow-hidden">
+            {listing.description}
+          </div>
+          {/* Smooth fading gradient over the last line without ellipsis '...' */}
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
         </div>
 
         <button
           onClick={() => setIsDescriptionModalOpen(true)}
-          className="flex items-center gap-1 text-base font-bold text-[#222222] underline underline-offset-4 hover:opacity-80 pt-2 cursor-pointer"
+          className="flex items-center gap-1 text-base font-bold text-[#222222] underline underline-offset-4 hover:opacity-80 pt-3 cursor-pointer"
         >
           <span>Show more</span>
           <ChevronRight className="w-4 h-4 stroke-[2.5]" />

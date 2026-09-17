@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Plus, Minus, Compass, Navigation } from 'lucide-react';
+import { MapPin, Plus, Minus, Compass, Navigation, Search, Utensils, Landmark, Waves, Moon, X } from 'lucide-react';
 
 interface LocationSectionProps {
   neighborhood: string;
@@ -16,13 +16,50 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
 }) => {
   const [zoomLevel, setZoomLevel] = useState(14);
   const [mapType, setMapType] = useState<'map' | 'satellite'>('map');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const places = [
+    { name: 'Vagator Beach & Red Cliffs', type: 'beach', dist: '5 min drive (1.8 km)' },
+    { name: 'Chapora Portuguese Fort', type: 'landmark', dist: '7 min drive (2.4 km)' },
+    { name: 'Thalassa Waterfront Greek Dining', type: 'dining', dist: '8 min drive (2.8 km)' },
+    { name: 'HillTop Iconic Palm Grove', type: 'nightlife', dist: '4 min drive (1.2 km)' },
+    { name: 'Anjuna Flea Market & Curlies', type: 'beach', dist: '10 min drive (3.6 km)' },
+  ];
+
+  const filteredPlaces = places.filter((p) =>
+    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <section id="location-section" className="py-8 border-b border-[#EBEBEB]">
-      <h2 className="text-[22px] font-bold text-[#222222] mb-2">Where you'll be</h2>
-      <p className="text-base text-[#222222] mb-6">
-        {city}, {state}, {country}
-      </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <div>
+          <h2 className="text-[22px] font-bold text-[#222222]">Where you'll be</h2>
+          <p className="text-base text-[#717171] mt-0.5">
+            {neighborhood}, {city}, {state}, {country}
+          </p>
+        </div>
+
+        {/* Location Search Bar (Change #14) */}
+        <div className="relative w-full sm:w-80">
+          <Search className="w-4 h-4 text-[#717171] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search nearby places..."
+            className="w-full bg-[#F7F7F7] border border-[#DDDDDD] rounded-full pl-10 pr-9 py-2 text-sm text-[#222222] focus:outline-hidden focus:border-[#222222] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-neutral-400 hover:text-neutral-700 cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* Stylized Interactive Map Container */}
       <div className="relative w-full h-[400px] md:h-[460px] rounded-2xl overflow-hidden border border-[#DDDDDD] bg-[#E5E3DF] shadow-xs">
@@ -44,21 +81,21 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
         >
           {/* Coastal Line / Ocean Graphic */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Pacific ocean representation */}
+            {/* Arabian Sea representation */}
             <div
               className={`absolute -bottom-10 -left-10 w-[120%] h-[55%] rounded-[40%] transform -rotate-6 transition-colors duration-300 ${
                 mapType === 'satellite' ? 'bg-[#1a365d]/80' : 'bg-[#C2E0F9]'
               }`}
             >
               <span className="absolute bottom-16 right-32 text-xs uppercase tracking-widest font-bold text-sky-800/60 select-none">
-                Pacific Ocean · Santa Monica Bay
+                Arabian Sea · Goa Coastline
               </span>
             </div>
 
-            {/* Pacific Coast Highway (PCH) line */}
+            {/* Coastal Road line */}
             <div className="absolute top-[48%] -left-10 w-[120%] h-3 bg-[#FFE082] transform -rotate-5 border-y border-amber-300 shadow-xs flex items-center justify-center">
               <span className="text-[9px] font-extrabold text-amber-900 uppercase tracking-wider">
-                CA-1 · Pacific Coast Hwy
+                Vagator Beach Road · North Goa
               </span>
             </div>
 
@@ -66,16 +103,16 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
             <div className="absolute top-12 left-12 w-64 h-36 border-2 border-emerald-800/10 rounded-full transform rotate-12" />
             <div className="absolute top-24 left-32 w-80 h-44 border-2 border-emerald-800/10 rounded-full transform -rotate-6" />
 
-            {/* Pier Marker */}
+            {/* Chapora Fort Marker */}
             <div className="absolute bottom-32 left-[30%] flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-xs border border-neutral-300 text-xs font-semibold text-[#222222]">
               <Navigation className="w-3 h-3 text-sky-600" />
-              <span>Malibu Pier & Farm</span>
+              <span>Chapora Fort (Dil Chahta Hai point)</span>
             </div>
 
-            {/* Carbon Beach Marker */}
+            {/* Vagator Beach Marker */}
             <div className="absolute bottom-24 left-[55%] flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-xs border border-neutral-300 text-xs font-semibold text-[#222222]">
               <Compass className="w-3 h-3 text-emerald-600" />
-              <span>Carbon Beach (Billionaire's Beach)</span>
+              <span>Vagator Beach & Thalassa</span>
             </div>
           </div>
 
@@ -136,7 +173,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
 
           {/* Scale note bottom left */}
           <div className="absolute bottom-3 left-3 bg-white/80 backdrop-blur-xs px-2 py-0.5 rounded text-[10px] text-neutral-600 font-mono">
-            Zoom: {zoomLevel}x · Malibu Coastline
+            Zoom: {zoomLevel}x · Goa Coastline
           </div>
         </div>
       </div>
@@ -145,8 +182,32 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
       <div className="mt-6 space-y-2">
         <h3 className="font-bold text-base text-[#222222]">{neighborhood}</h3>
         <p className="text-sm text-[#717171] leading-relaxed">
-          The property is nestled high in the tranquil Malibu hills just minutes above Carbon Beach. You're a short 6-minute scenic drive to the Pacific Coast Highway, Nobu Malibu, Soho Little Beach House, and the shopping and gourmet markets at Malibu Country Mart. Santa Monica and LAX are approximately 30–45 minutes away.
+          The villa is situated in a tranquil cul-de-sac of Ozran, overlooking lush coconut palms and just minutes away from the famous cliffs of Little Vagator. Renowned sunset spots, Greek taverna Thalassa, Antares Restaurant, and the historic Chapora Fort are right at your doorstep, while retaining complete private seclusion.
         </p>
+      </div>
+
+      {/* Neighborhood Highlights Section (Change #15) */}
+      <div className="mt-8 pt-6 border-t border-[#EBEBEB]">
+        <h3 className="font-bold text-lg text-[#222222] mb-4">Neighborhood highlights</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredPlaces.map((place, idx) => (
+            <div
+              key={idx}
+              className="p-4 rounded-xl border border-[#EBEBEB] bg-[#FAFAFA] hover:border-neutral-400 transition-colors flex items-start gap-3"
+            >
+              <div className="p-2 rounded-lg bg-white shadow-xs text-[#222222] shrink-0 mt-0.5">
+                {place.type === 'beach' && <Waves className="w-4 h-4 text-sky-600" />}
+                {place.type === 'landmark' && <Landmark className="w-4 h-4 text-amber-700" />}
+                {place.type === 'dining' && <Utensils className="w-4 h-4 text-rose-600" />}
+                {place.type === 'nightlife' && <Moon className="w-4 h-4 text-purple-600" />}
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm text-[#222222]">{place.name}</h4>
+                <p className="text-xs text-[#717171] mt-0.5">{place.dist}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

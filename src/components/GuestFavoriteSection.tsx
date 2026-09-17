@@ -50,45 +50,32 @@ export const GuestFavoriteSection: React.FC<GuestFavoriteSectionProps> = ({
 }) => {
   return (
     <section className="py-10 border-b border-[#EBEBEB]">
-      {/* Huge Guest Favorite Centerpiece */}
+      {/* Huge Guest Favorite Centerpiece (Change #11: Rating on top flanked by laurels, then text) */}
       <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto mb-10">
-        <div className="flex items-center gap-3 text-[#222222] mb-3">
-          <LaurelLeftSVG className="w-10 h-16 text-[#222222]" />
-          <div className="text-center px-2">
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#222222]">
-              Guest favorite
-            </h2>
+        <div className="flex items-center justify-center gap-3 text-[#222222] mb-2">
+          <LaurelLeftSVG className="w-9 h-14 text-[#222222]" />
+          <div className="text-4xl md:text-5xl font-black tracking-tight text-[#222222] px-1">
+            {rating.toFixed(2)}
           </div>
-          <LaurelRightSVG className="w-10 h-16 text-[#222222]" />
+          <LaurelRightSVG className="w-9 h-14 text-[#222222]" />
         </div>
 
-        <p className="text-lg md:text-xl text-[#717171] font-medium max-w-lg mx-auto">
-          One of the most loved homes on Airbnb, according to guests
+        <div className="flex items-center justify-center gap-0.5 text-[#222222] mb-3">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-4 h-4 fill-current text-[#222222]" />
+          ))}
+        </div>
+
+        <h2 className="text-2xl md:text-3xl font-extrabold text-[#222222] mb-1">
+          Guest favorite
+        </h2>
+
+        <p className="text-base text-[#717171] max-w-md mx-auto">
+          One of the most loved homes on Airbnb based on ratings, reviews, and reliability
         </p>
 
-        {/* Overall Rating & Reviews Display */}
-        <div className="flex items-center justify-center gap-8 mt-6">
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-[#222222] flex items-center justify-center gap-2">
-              <span>{rating.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center justify-center gap-1 mt-1 text-[#222222]">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-current text-[#222222]" />
-              ))}
-            </div>
-          </div>
-
-          <div className="h-12 w-px bg-[#DDDDDD]" />
-
-          <div className="text-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-[#222222]">
-              {reviewCount}
-            </div>
-            <div className="text-sm font-semibold text-[#717171] underline mt-1 cursor-pointer">
-              Reviews
-            </div>
-          </div>
+        <div className="mt-4 text-sm font-semibold text-[#717171]">
+          <span className="text-[#222222] font-bold text-lg">{reviewCount}</span> Reviews
         </div>
       </div>
 

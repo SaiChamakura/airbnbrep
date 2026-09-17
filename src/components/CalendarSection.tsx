@@ -53,32 +53,44 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
   const renderMonthGrid = (m: typeof months[0]) => {
     const days = [];
     for (let i = 0; i < m.startDayOfWeek; i++) {
-      days.push(<div key={`blank-${i}`} className="h-10 w-10" />);
+      days.push(<div key={`blank-${i}`} className="h-11 w-full" />);
     }
     for (let day = 1; day <= m.daysInMonth; day++) {
       const date = new Date(m.year, m.month, day);
       const status = isDateSelected(date);
       const isPast = date < new Date(2026, 9, 1);
+      const dayOfWeek = (m.startDayOfWeek + day - 1) % 7;
+      const isStartCol = dayOfWeek === 0;
+      const isEndCol = dayOfWeek === 6;
 
       days.push(
         <div
           key={day}
-          className={`relative h-10 w-10 flex items-center justify-center ${
-            status === 'between'
-              ? 'bg-[#F7F7F7]'
-              : status === 'start' && checkOutDate
-              ? 'bg-gradient-to-r from-transparent via-transparent 50% to-[#F7F7F7] 50%'
-              : status === 'end' && checkInDate
-              ? 'bg-gradient-to-r from-[#F7F7F7] 50% via-[#F7F7F7] 50% to-transparent'
-              : ''
-          }`}
+          className="relative h-11 w-full flex items-center justify-center"
         >
+          {/* Continuous cylinder background band for middle and boundary dates */}
+          {status === 'between' && (
+            <div
+              className={`absolute inset-0 bg-[#F7F7F7] ${
+                isStartCol ? 'rounded-l-full' : ''
+              } ${isEndCol ? 'rounded-r-full' : ''}`}
+            />
+          )}
+
+          {status === 'start' && checkOutDate && (
+            <div className="absolute inset-y-0 right-0 w-1/2 bg-[#F7F7F7]" />
+          )}
+
+          {status === 'end' && checkInDate && (
+            <div className="absolute inset-y-0 left-0 w-1/2 bg-[#F7F7F7]" />
+          )}
+
           <button
             disabled={isPast}
             onClick={() => onSelectDate(date)}
             className={`h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all relative z-10 cursor-pointer ${
               status === 'start' || status === 'end'
-                ? 'bg-[#222222] text-white hover:bg-black scale-105 shadow-xs'
+                ? 'bg-[#222222] text-white hover:bg-black shadow-xs'
                 : status === 'between'
                 ? 'text-[#222222] hover:bg-neutral-200'
                 : isPast
@@ -97,22 +109,11 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
 
   return (
     <section id="calendar-section" className="py-8 border-b border-[#EBEBEB]">
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h2 className="text-[22px] font-bold text-[#222222]">
-            {nights ? `${nights} nights in ${city}` : 'Select check-in date'}
-          </h2>
-          <p className="text-sm text-[#717171] mt-1">{formatDateRange()}</p>
-        </div>
-
-        {(checkInDate || checkOutDate) && (
-          <button
-            onClick={onClearDates}
-            className="text-sm font-semibold text-[#222222] underline hover:text-black cursor-pointer pt-1"
-          >
-            Clear dates
-          </button>
-        )}
+      <div className="mb-6">
+        <h2 className="text-[22px] font-bold text-[#222222]">
+          {nights ? `${nights} nights in ${city}` : 'Select check-in date'}
+        </h2>
+        <p className="text-sm text-[#717171] mt-1">{formatDateRange()}</p>
       </div>
 
       {/* 2-Month side by side layout */}
@@ -149,7 +150,7 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
                   </h3>
 
                   {/* Day headers */}
-                  <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-[#717171]">
+                  <div className="grid grid-cols-7 text-center text-xs font-semibold text-[#717171]">
                     <div>Su</div>
                     <div>Mo</div>
                     <div>Tu</div>
@@ -160,11 +161,23 @@ export const CalendarSection: React.FC<CalendarSectionProps> = ({
                   </div>
 
                   {/* Grid cells */}
-                  <div className="grid grid-cols-7 gap-y-1 text-center">
+                  <div className="grid grid-cols-7 text-center">
                     {renderMonthGrid(m)}
                   </div>
                 </div>
               )
+          )}
+        </div>
+
+        {/* Clear dates button moved BELOW the calendar (Change #8) */}
+        <div className="flex justify-end pt-4">
+          {(checkInDate || checkOutDate) && (
+            <button
+              onClick={onClearDates}
+              className="text-sm font-semibold text-[#222222] underline hover:text-black cursor-pointer p-1"
+            >
+              Clear dates
+            </button>
           )}
         </div>
       </div>

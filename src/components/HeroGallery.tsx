@@ -143,11 +143,21 @@ export const HeroGallery: React.FC<HeroGalleryProps> = ({
       {/* "Show all photos" floating button */}
       <button
         onClick={onOpenPhotoTour}
-        className="absolute bottom-5 right-5 z-10 flex items-center gap-2 bg-white/95 hover:bg-white text-[#222222] text-sm font-semibold px-4 py-1.5 rounded-lg border border-[#222222] shadow-md hover:scale-[1.02] active:scale-98 transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
-        aria-label={`Show all ${photos.length} photos`}
+        className="absolute bottom-5 right-5 z-10 flex items-center gap-2 bg-white hover:bg-neutral-50 text-[#222222] text-sm font-semibold px-4 py-1.5 rounded-lg border border-[#222222] shadow-sm hover:scale-[1.01] active:scale-98 transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
+        aria-label="Show all photos"
       >
-        <LayoutGrid className="w-4 h-4" />
-        <span>Show all {photos.length} photos</span>
+        <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
+          <circle cx="2" cy="2" r="1.5" />
+          <circle cx="8" cy="2" r="1.5" />
+          <circle cx="14" cy="2" r="1.5" />
+          <circle cx="2" cy="8" r="1.5" />
+          <circle cx="8" cy="8" r="1.5" />
+          <circle cx="14" cy="8" r="1.5" />
+          <circle cx="2" cy="14" r="1.5" />
+          <circle cx="8" cy="14" r="1.5" />
+          <circle cx="14" cy="14" r="1.5" />
+        </svg>
+        <span>Show all photos</span>
       </button>
     </section>
   );

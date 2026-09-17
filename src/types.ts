@@ -20,6 +20,7 @@ export interface Review {
   authorName: string;
   authorAvatar: string;
   authorLocation?: string;
+  yearsOnAirbnb: string;
   date: string;
   rating: number;
   comment: string;
@@ -31,6 +32,12 @@ export interface Bedroom {
   bedType: string;
   bedCount: string;
   image: string;
+}
+
+export interface CoHost {
+  name: string;
+  avatar: string;
+  role?: string;
 }
 
 export interface Host {
@@ -46,6 +53,7 @@ export interface Host {
   bio: string;
   work?: string;
   languages?: string[];
+  coHosts?: CoHost[];
 }
 
 export interface NearbyStay {

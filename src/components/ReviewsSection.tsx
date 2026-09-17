@@ -27,12 +27,35 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
   return (
     <section id="reviews-section" className="py-8 border-b border-[#EBEBEB]">
-      {/* Title & Review Count */}
-      <div className="flex items-center gap-2 mb-6">
-        <Star className="w-6 h-6 fill-current text-[#222222]" />
-        <h2 className="text-[22px] font-bold text-[#222222]">
-          {overallRating.toFixed(2)} · {totalReviews} reviews
-        </h2>
+      {/* Title & Review Count with 5-Star Visual Rating Scale */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 max-w-4xl">
+        <div className="flex items-center gap-3">
+          <Star className="w-7 h-7 fill-current text-[#222222]" />
+          <h2 className="text-[22px] font-bold text-[#222222]">
+            {overallRating.toFixed(2)} · {totalReviews} reviews
+          </h2>
+        </div>
+
+        {/* 5-star distribution breakdown scale */}
+        <div className="flex flex-col gap-1 w-full sm:w-56 text-xs text-[#717171]">
+          {[
+            { star: 5, pct: 96 },
+            { star: 4, pct: 4 },
+            { star: 3, pct: 0 },
+            { star: 2, pct: 0 },
+            { star: 1, pct: 0 },
+          ].map((item) => (
+            <div key={item.star} className="flex items-center gap-2">
+              <span className="w-3 text-right font-semibold text-[#222222]">{item.star}</span>
+              <div className="flex-1 bg-[#EBEBEB] h-1 rounded-full overflow-hidden">
+                <div
+                  className="bg-[#222222] h-full rounded-full"
+                  style={{ width: `${item.pct}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* 6 Category Rating Progress Bars */}
@@ -143,8 +166,14 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 <h3 className="font-bold text-base text-[#222222] leading-tight">
                   {review.authorName}
                 </h3>
-                <div className="flex items-center gap-1.5 text-sm text-[#717171]">
+                <div className="flex items-center flex-wrap gap-1.5 text-sm text-[#717171]">
                   <span>{review.authorLocation || 'Guest'}</span>
+                  {review.yearsOnAirbnb && (
+                    <>
+                      <span>·</span>
+                      <span>{review.yearsOnAirbnb}</span>
+                    </>
+                  )}
                   <span>·</span>
                   <span>{review.date}</span>
                 </div>

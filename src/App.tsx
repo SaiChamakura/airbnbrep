@@ -15,10 +15,10 @@ import { LocationSection } from './components/LocationSection';
 import { HostSection } from './components/HostSection';
 import { ThingsToKnowSection } from './components/ThingsToKnowSection';
 import { MoreStaysSection } from './components/MoreStaysSection';
-import { Footer } from './components/Footer';
 import { PhotoTourModal } from './components/PhotoTourModal';
 import { LightboxModal } from './components/LightboxModal';
 import { ShareModal } from './components/ShareModal';
+import { Heart } from 'lucide-react';
 
 export const App: React.FC = () => {
   // Booking dates (Oct 18, 2026 – Oct 23, 2026: 5 nights)
@@ -36,10 +36,13 @@ export const App: React.FC = () => {
   // Saved / Wishlist toggle
   const [isSaved, setIsSaved] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('airbnb_malibu_saved') === 'true';
+      return localStorage.getItem('airbnb_goa_saved') === 'true';
     }
     return false;
   });
+
+  // Wishlist Toast state (Change #3)
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Scroll detection for upper bar transformation
   const [isScrolled, setIsScrolled] = useState(false);
@@ -75,12 +78,21 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [toastMessage]);
+
   const handleToggleSave = () => {
     setIsSaved((prev) => {
       const next = !prev;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('airbnb_malibu_saved', String(next));
+        localStorage.setItem('airbnb_goa_saved', String(next));
       }
+      setToastMessage(next ? 'Saved to wishlist' : 'Removed from wishlist');
       return next;
     });
   };
@@ -244,8 +256,21 @@ export const App: React.FC = () => {
         <MoreStaysSection stays={nearbyStays} />
       </main>
 
-      {/* Global Footer */}
-      <Footer />
+      {/* Floating Wishlist Toast Notification (Change #3) */}
+      {toastMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-[#222222] text-white px-5 py-3 rounded-full shadow-2xl text-sm font-semibold animate-in fade-in slide-in-from-bottom-3 duration-200"
+        >
+          <Heart
+            className={`w-4 h-4 ${
+              toastMessage.includes('Saved') ? 'fill-[#FF385C] text-[#FF385C]' : 'text-white'
+            }`}
+          />
+          <span>{toastMessage}</span>
+        </div>
+      )}
 
       {/* View 2: Full-screen Photo Tour Modal */}
       <PhotoTourModal

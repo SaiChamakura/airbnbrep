@@ -83,6 +83,27 @@ export const AllReviewsModal: React.FC<AllReviewsModalProps> = ({
               {totalReviews} reviews
             </div>
 
+            {/* 5-star distribution scale */}
+            <div className="flex flex-col gap-1 w-full text-xs text-[#717171] pt-1 pb-3 border-b border-[#EBEBEB]">
+              {[
+                { star: 5, pct: 96 },
+                { star: 4, pct: 4 },
+                { star: 3, pct: 0 },
+                { star: 2, pct: 0 },
+                { star: 1, pct: 0 },
+              ].map((item) => (
+                <div key={item.star} className="flex items-center gap-2">
+                  <span className="w-3 text-right font-semibold text-[#222222]">{item.star}</span>
+                  <div className="flex-1 bg-[#EBEBEB] h-1 rounded-full overflow-hidden">
+                    <div
+                      className="bg-[#222222] h-full rounded-full"
+                      style={{ width: `${item.pct}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {/* Rating breakdown bars */}
             <div className="space-y-3 pt-2 text-sm text-[#222222]">
               <div className="flex justify-between items-center">
@@ -174,6 +195,7 @@ export const AllReviewsModal: React.FC<AllReviewsModalProps> = ({
                         <h4 className="font-bold text-sm text-[#222222]">{review.authorName}</h4>
                         <p className="text-xs text-[#717171]">
                           {review.authorLocation && `${review.authorLocation} · `}
+                          {review.yearsOnAirbnb && `${review.yearsOnAirbnb} · `}
                           {review.date}
                         </p>
                       </div>

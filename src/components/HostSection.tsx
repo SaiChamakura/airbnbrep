@@ -45,6 +45,27 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
             <h3 className="text-2xl font-bold text-[#222222]">{host.name}</h3>
             <p className="text-sm font-semibold text-[#717171] mt-0.5">Superhost</p>
 
+            {/* Co-hosts mini preview in the left card (Change #16) */}
+            {host.coHosts && host.coHosts.length > 0 && (
+              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-[#EBEBEB] w-full justify-center">
+                <span className="text-xs font-semibold text-[#717171]">Co-hosts:</span>
+                <div className="flex -space-x-2 overflow-hidden">
+                  {host.coHosts.map((c, i) => (
+                    <img
+                      key={i}
+                      src={c.avatar}
+                      alt={c.name}
+                      title={`${c.name} (${c.role || 'Co-Host'})`}
+                      className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
+                    />
+                  ))}
+                </div>
+                <span className="text-xs font-medium text-[#222222]">
+                  {host.coHosts.map((c) => c.name).join(', ')}
+                </span>
+              </div>
+            )}
+
             {/* Quick stats in card */}
             <div className="grid grid-cols-3 divide-x divide-[#EBEBEB] w-full pt-6 mt-4 border-t border-[#EBEBEB] text-center">
               <div>
@@ -88,6 +109,28 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
             <p className="text-sm text-[#717171] leading-relaxed pt-2 border-t border-[#EBEBEB]">
               {host.bio}
             </p>
+
+            {/* Co-hosts section with images and names (Change #16) */}
+            {host.coHosts && host.coHosts.length > 0 && (
+              <div className="pt-3 border-t border-[#EBEBEB]">
+                <h5 className="font-bold text-sm text-[#222222] mb-3">Co-hosts</h5>
+                <div className="flex flex-wrap gap-4">
+                  {host.coHosts.map((cohost, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <img
+                        src={cohost.avatar}
+                        alt={cohost.name}
+                        className="w-10 h-10 rounded-full object-cover border border-[#DDDDDD]"
+                      />
+                      <div>
+                        <div className="text-sm font-semibold text-[#222222]">{cohost.name}</div>
+                        <div className="text-xs text-[#717171]">{cohost.role || 'Co-Host'}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button
               onClick={() => setIsContactModalOpen(true)}
