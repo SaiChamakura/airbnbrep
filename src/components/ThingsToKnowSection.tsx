@@ -13,9 +13,10 @@ export const ThingsToKnowSection: React.FC<ThingsToKnowSectionProps> = ({ listin
     <section className="py-8 border-b border-[#EBEBEB]">
       <h2 className="text-[22px] font-bold text-[#222222] mb-6">Things to know</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+      {/* SINGLE COLUMN LAYOUT AS REQUESTED IN ITEM #12 */}
+      <div className="flex flex-col space-y-6 divide-y divide-[#EBEBEB] max-w-2xl text-sm">
         {/* House rules */}
-        <div className="space-y-3">
+        <div className="space-y-3 pt-2">
           <h3 className="font-bold text-base text-[#222222] flex items-center gap-2">
             <Clock className="w-4 h-4 text-[#222222]" />
             <span>House rules</span>
@@ -36,7 +37,7 @@ export const ThingsToKnowSection: React.FC<ThingsToKnowSectionProps> = ({ listin
         </div>
 
         {/* Safety & property */}
-        <div className="space-y-3">
+        <div className="space-y-3 pt-6">
           <h3 className="font-bold text-base text-[#222222] flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-[#222222]" />
             <span>Safety & property</span>
@@ -57,7 +58,7 @@ export const ThingsToKnowSection: React.FC<ThingsToKnowSectionProps> = ({ listin
         </div>
 
         {/* Cancellation policy */}
-        <div className="space-y-3">
+        <div className="space-y-3 pt-6">
           <h3 className="font-bold text-base text-[#222222] flex items-center gap-2">
             <CalendarX className="w-4 h-4 text-[#222222]" />
             <span>Cancellation policy</span>
@@ -75,7 +76,7 @@ export const ThingsToKnowSection: React.FC<ThingsToKnowSectionProps> = ({ listin
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal Dialog */}
       {activeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl w-full max-w-xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">

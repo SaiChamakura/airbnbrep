@@ -1,4 +1,4 @@
-import { ListingData } from '../types';
+import { ListingData, NearbyStay } from '../types';
 
 export const listingData: ListingData = {
   id: 'villa-malibu-oceanview-701',
@@ -16,7 +16,7 @@ export const listingData: ListingData = {
   guestsCount: 8,
   bedroomsCount: 4,
   bedsCount: 5,
-  bathsCount: 4.5,
+  bathsCount: 5, // Natural integer: 5 full bathrooms
   pricePerNight: 495,
   cleaningFee: 240,
   serviceFee: 285,
@@ -29,8 +29,8 @@ export const listingData: ListingData = {
     },
     {
       icon: 'award',
-      title: 'Elena is a Superhost',
-      description: 'Superhosts are experienced, highly rated Hosts committed to providing great stays.',
+      title: 'Elena & Marcus are Superhosts',
+      description: 'Superhosts are experienced, highly rated hosts committed to providing great stays.',
     },
     {
       icon: 'key',
@@ -43,15 +43,20 @@ export const listingData: ListingData = {
       description: 'Get a full refund if you change your plans within 48 hours of booking.',
     },
   ],
-  description: `Welcome to The Crest Villa, a mid-century modern masterpiece perched above the Pacific Ocean in world-famous Malibu. Designed by renowned architects with warm cedar wood ceilings, expansive floor-to-ceiling glass walls, and unobstructed 200-degree ocean views stretching from Point Dume to Santa Monica Bay.
+  description: `✨ Welcome to The Crest Villa, a mid-century modern architectural masterpiece perched above the Pacific Ocean in world-famous Malibu. Designed by renowned architects with warm cedar wood ceilings, expansive floor-to-ceiling glass walls, and unobstructed 200-degree ocean views stretching from Point Dume to Santa Monica Bay.
 
-Enjoy your private solar-heated infinity-edge pool that cascades towards the sea, an open-air hot tub under the stars, an outdoor fire pit terrace, and custom sun lounges. The interior features an open-concept great room, imported travertine floors, and a chef's kitchen fitted with professional Wolf and Sub-Zero appliances.`,
+🌅 Panoramic Coastal Vistas: Enjoy floor-to-ceiling sliding glass pocket doors that seamlessly unite indoor and outdoor California living.
+🏊‍♂️ Heated Infinity Pool & Spa: Solar-heated infinity-edge pool cascading towards the sea and an open-air hot tub under the stars.
+🍳 Chef's Dream Kitchen: Professional Wolf gas range, dual Sub-Zero refrigeration, custom marble island, and espresso bar.
+🛏️ 4 Curated Bedroom Suites: Designed with organic linens, custom California closets, and private en-suite spa bathrooms.
+🍷 Sunset Wine Terrace: Built-in outdoor gas fire pit table, BBQ grill station, and designer sun loungers.
+🌊 Prime Location: Just 5 minutes to Carbon Beach, Malibu Pier, Nobu Malibu, and Soho Little Beach House.`,
   spaceDescription: `The residence spans over 4,600 interior square feet of curated luxury:
-• Master Suite: King-size bed, panoramic ocean balcony, floating fireplace, spa bathroom with freestanding soaking tub facing the water, and dual rain shower.
-• Bedroom 2: Queen-size bed with direct pool terrace access and en-suite bath.
-• Bedroom 3: Queen-size bed with private garden terrace and ocean glimpses.
-• Bedroom 4: Two twin XL beds (can be combined into a King upon request) with en-suite bath.
-• Great Room: 75" Samsung Frame TV, Sonos sound system throughout the property, and Fleetwood pocket sliding doors that seamlessly blend indoor and outdoor living.`,
+• 🛏️ Master Suite: King-size bed, panoramic ocean balcony, floating fireplace, spa bathroom with freestanding soaking tub facing the water, and dual rain shower.
+• 🛏️ Bedroom 2: Queen-size bed with direct pool terrace access and en-suite bath.
+• 🛏️ Bedroom 3: Queen-size bed with private garden terrace and ocean glimpses.
+• 🛏️ Bedroom 4: Two twin XL beds (can be combined into a King upon request) with en-suite bath.
+• 📺 Great Room: 75" Samsung Frame TV, Sonos sound system throughout the property, and Fleetwood pocket sliding doors that seamlessly blend indoor and outdoor living.`,
   guestAccess: 'Guests have exclusive, private access to the entire estate, including all grounds, garage parking for 3 vehicles, infinity pool, heated spa, outdoor kitchen, and private hilltop viewing deck.',
   otherNotes: 'Strict noise ordinance is observed after 10:00 PM out of respect for neighbors. Commercial filming or unauthorized events are strictly prohibited without prior written consent. Heated pool service is included year-round.',
   ratingsBreakdown: {
@@ -192,27 +197,31 @@ Enjoy your private solar-heated infinity-edge pool that cascades towards the sea
   bedrooms: [
     {
       id: 'b1',
-      name: 'Bedroom 1 (Primary Suite)',
+      name: 'Bedroom 1',
       bedType: 'King bed',
-      bedCount: '1 king bed · En suite bathroom · Ocean balcony',
+      bedCount: '1 king bed · En suite bathroom',
+      image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80',
     },
     {
       id: 'b2',
       name: 'Bedroom 2',
       bedType: 'Queen bed',
-      bedCount: '1 queen bed · En suite bathroom · Pool deck access',
+      bedCount: '1 queen bed · En suite bathroom',
+      image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80',
     },
     {
       id: 'b3',
       name: 'Bedroom 3',
       bedType: 'Queen bed',
-      bedCount: '1 queen bed · Private patio',
+      bedCount: '1 queen bed',
+      image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=600&q=80',
     },
     {
       id: 'b4',
       name: 'Bedroom 4',
       bedType: '2 single beds',
-      bedCount: '2 twin beds · En suite bathroom',
+      bedCount: '2 single beds',
+      image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=600&q=80',
     },
   ],
   amenities: [
@@ -226,7 +235,6 @@ Enjoy your private solar-heated infinity-edge pool that cascades towards the sea
     { id: 'a8', name: 'Chef kitchen with Sub-Zero appliances', category: 'Kitchen & dining', iconName: 'Utensils', highlight: true },
     { id: 'a9', name: 'Central air conditioning & heating', category: 'Heating & cooling', iconName: 'Wind', highlight: true },
     { id: 'a10', name: 'Exterior security cameras on property', category: 'Home safety', iconName: 'ShieldCheck', highlight: true },
-    // Expanded amenities
     { id: 'a11', name: 'EV charger available in garage', category: 'Parking & facilities', iconName: 'Zap' },
     { id: 'a12', name: 'Indoor gas fireplace', category: 'Heating & cooling', iconName: 'Flame' },
     { id: 'a13', name: 'Sonos sound system throughout', category: 'Entertainment', iconName: 'Music' },
@@ -329,3 +337,54 @@ Enjoy your private solar-heated infinity-edge pool that cascades towards the sea
   ],
   cancellationPolicy: 'Free cancellation for 48 hours. Cancel up to 14 days before check-in for a full refund. After that, cancel before check-in for a 50% refund minus service fee.',
 };
+
+export const nearbyStays: NearbyStay[] = [
+  {
+    id: 'stay-1',
+    title: 'Architectural Malibu Beach House',
+    location: 'Malibu, California',
+    subtitle: '5 miles away · Private beach cove',
+    dates: 'Oct 18 – 23',
+    pricePerNight: 520,
+    rating: 4.96,
+    reviewCount: 112,
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
+    isGuestFavorite: true,
+  },
+  {
+    id: 'stay-2',
+    title: 'Modern Oceanfront Glass Villa',
+    location: 'Malibu, California',
+    subtitle: 'Point Dume · Panoramic bluff view',
+    dates: 'Oct 18 – 23',
+    pricePerNight: 680,
+    rating: 4.99,
+    reviewCount: 94,
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=600&q=80',
+    isGuestFavorite: true,
+  },
+  {
+    id: 'stay-3',
+    title: 'Hillside Villa with Heated Plunge Pool',
+    location: 'Malibu, California',
+    subtitle: 'Carbon Canyon · Ocean & mountain views',
+    dates: 'Oct 18 – 23',
+    pricePerNight: 430,
+    rating: 4.94,
+    reviewCount: 140,
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
+    isGuestFavorite: false,
+  },
+  {
+    id: 'stay-4',
+    title: 'Mid-Century Malibu Coastal Oasis',
+    location: 'Malibu, California',
+    subtitle: 'Malibu Colony · Walk to Nobu',
+    dates: 'Oct 18 – 23',
+    pricePerNight: 395,
+    rating: 4.92,
+    reviewCount: 78,
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80',
+    isGuestFavorite: true,
+  },
+];

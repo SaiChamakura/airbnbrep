@@ -30,6 +30,7 @@ export interface Bedroom {
   name: string;
   bedType: string;
   bedCount: string;
+  image: string;
 }
 
 export interface Host {
@@ -45,6 +46,19 @@ export interface Host {
   bio: string;
   work?: string;
   languages?: string[];
+}
+
+export interface NearbyStay {
+  id: string;
+  title: string;
+  location: string;
+  subtitle: string;
+  dates: string;
+  pricePerNight: number;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  isGuestFavorite?: boolean;
 }
 
 export interface ListingData {
@@ -63,7 +77,7 @@ export interface ListingData {
   guestsCount: number;
   bedroomsCount: number;
   bedsCount: number;
-  bathsCount: number;
+  bathsCount: number; // Natural integer e.g. 5
   pricePerNight: number;
   cleaningFee: number;
   serviceFee: number;
