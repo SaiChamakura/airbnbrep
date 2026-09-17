@@ -132,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               aria-label="Choose language and currency"
               className="p-2.5 text-[#222222] hover:bg-[#F7F7F7] rounded-full transition-colors cursor-pointer"
-              onClick={() => alert('Language: English (US) · Currency: USD ($)')}
+              onClick={() => alert('Language: English (India) · Currency: INR (₹)')}
             >
               <Globe className="w-4 h-4 stroke-[2]" />
             </button>
@@ -204,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="hidden sm:flex flex-col text-right">
               <div>
                 <span className="text-base font-extrabold text-[#222222]">
-                  ${pricePerNight}
+                  ₹{pricePerNight.toLocaleString('en-IN')}
                 </span>{' '}
                 <span className="text-xs text-[#717171] font-medium">night</span>
               </div>

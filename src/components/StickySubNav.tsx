@@ -121,7 +121,9 @@ export const StickySubNav: React.FC<StickySubNavProps> = ({
         <div className="flex items-center gap-4">
           <div className="text-right">
             <div className="flex items-baseline gap-1 justify-end">
-              <span className="text-lg font-bold text-[#222222]">${pricePerNight}</span>
+              <span className="text-lg font-bold text-[#222222]">
+                ₹{pricePerNight.toLocaleString('en-IN')}
+              </span>
               <span className="text-xs text-[#717171] font-normal">night</span>
             </div>
             <div className="flex items-center gap-1 text-xs text-[#222222] font-semibold">

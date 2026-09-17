@@ -73,7 +73,9 @@ export const BookingCard: React.FC<BookingCardProps> = ({
         {/* Header: Price & Rating */}
         <div className="flex items-baseline justify-between">
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold text-[#222222]">${listing.pricePerNight}</span>
+            <span className="text-2xl font-bold text-[#222222]">
+              ₹{listing.pricePerNight.toLocaleString('en-IN')}
+            </span>
             <span className="text-base text-[#717171] font-normal">night</span>
           </div>
 
@@ -270,27 +272,27 @@ export const BookingCard: React.FC<BookingCardProps> = ({
         {/* Price Breakdown */}
         <div className="space-y-3 pt-2 text-sm text-[#222222]">
           <div className="flex items-center justify-between">
-            <span className="underline">${listing.pricePerNight} x {nights} nights</span>
-            <span>${stayCost}</span>
+            <span className="underline">₹{listing.pricePerNight.toLocaleString('en-IN')} x {nights} nights</span>
+            <span>₹{stayCost.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="underline">Cleaning fee</span>
-            <span>${listing.cleaningFee}</span>
+            <span>₹{listing.cleaningFee.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="underline">Airbnb service fee</span>
-            <span>${listing.serviceFee}</span>
+            <span>₹{listing.serviceFee.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="underline">Taxes</span>
-            <span>${listing.taxes}</span>
+            <span>₹{listing.taxes.toLocaleString('en-IN')}</span>
           </div>
         </div>
 
         {/* Total */}
         <div className="pt-4 border-t border-[#EBEBEB] flex items-center justify-between font-bold text-base text-[#222222]">
           <span>Total before taxes</span>
-          <span>${total}</span>
+          <span>₹{total.toLocaleString('en-IN')}</span>
         </div>
       </div>
 

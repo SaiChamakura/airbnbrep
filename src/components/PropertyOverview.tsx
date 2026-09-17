@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Key, Calendar, ChevronRight, X, Star } from 'lucide-react';
+import { Sparkles, Award, Key, Calendar, ChevronRight, X, Star, Languages } from 'lucide-react';
 import { ListingData } from '../types';
 import { LaurelLeftSVG, LaurelRightSVG } from './GuestFavoriteSection';
 
@@ -9,6 +9,10 @@ interface PropertyOverviewProps {
 
 export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) => {
   const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
+  const [isShowingOriginal, setIsShowingOriginal] = useState(false);
+
+  // Original text representation for translation toggle
+  const originalDescription = `Apresentamos Villa Sol de Goa: uma propriedade magnífica e exclusiva em Little Vagator. Tetos altos em madeira de teca, varanda colonial portuguesa e piscina de borda infinita privativa. Totalmente equipada com chef particular opcional e comodidades de luxo.`;
 
   return (
     <div className="space-y-6">
@@ -111,11 +115,26 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ listing }) =
         ))}
       </div>
 
+      {/* Automatic Translation Info Box (Change #2) */}
+      <div className="flex items-center gap-3 p-4 rounded-2xl border border-[#EBEBEB] bg-[#F7F7F7] text-sm text-[#222222]">
+        <Languages className="w-5 h-5 text-[#222222] shrink-0" />
+        <div className="flex-1">
+          <span>Some info has been automatically translated.{' '}</span>
+          <button
+            type="button"
+            onClick={() => setIsShowingOriginal((prev) => !prev)}
+            className="font-bold underline text-[#222222] hover:text-black cursor-pointer inline transition-opacity"
+          >
+            {isShowingOriginal ? 'Show translated' : 'Show original'}
+          </button>
+        </div>
+      </div>
+
       {/* Description Section without Title / Section Name (Change #6) and with smooth fading effect */}
       <div className="py-6 border-b border-[#EBEBEB]">
         <div className="relative">
           <div className="text-base text-[#222222] leading-relaxed whitespace-pre-line max-h-[140px] overflow-hidden">
-            {listing.description}
+            {isShowingOriginal ? originalDescription : listing.description}
           </div>
           {/* Smooth fading gradient over the last line without ellipsis '...' */}
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, Heart } from 'lucide-react';
+import { Star, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { NearbyStay } from '../types';
 
 interface MoreStaysSectionProps {
@@ -7,7 +7,19 @@ interface MoreStaysSectionProps {
 }
 
 export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => {
+  const [currentPage, setCurrentPage] = useState(0);
   const [savedStayIds, setSavedStayIds] = useState<Record<string, boolean>>({});
+
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(stays.length / itemsPerPage);
+
+  const handlePrev = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
 
   const toggleSaveStay = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -17,19 +29,52 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
     }));
   };
 
+  // Slice stays for the current minipage
+  const displayedStays = stays.slice(
+    currentPage * itemsPerPage,
+    currentPage * itemsPerPage + itemsPerPage
+  );
+
   return (
     <section className="py-12 border-b border-[#EBEBEB]">
-      <div className="mb-6">
-        <h2 className="text-[22px] font-bold text-[#222222]">
-          More places to stay nearby
-        </h2>
-        <p className="text-sm text-[#717171] mt-1">
-          Explore similar coastal villas in and around Malibu
-        </p>
+      {/* Header with Title and Arrow-only Controls */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-[22px] font-bold text-[#222222]">
+            More stays nearby
+          </h2>
+          <p className="text-sm text-[#717171] mt-1">
+            Explore similar coastal villas in and around North Goa
+          </p>
+        </div>
+
+        {/* Arrow-only Navigation Controls (Change #6) */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold text-[#717171] mr-1 hidden sm:inline">
+            {currentPage + 1} / {totalPages}
+          </span>
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 0}
+            aria-label="Previous stays"
+            className="w-8 h-8 rounded-full border border-[#DDDDDD] flex items-center justify-center text-[#222222] hover:border-black disabled:opacity-30 disabled:hover:border-[#DDDDDD] disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95 bg-white"
+          >
+            <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={currentPage >= totalPages - 1}
+            aria-label="Next stays"
+            className="w-8 h-8 rounded-full border border-[#DDDDDD] flex items-center justify-center text-[#222222] hover:border-black disabled:opacity-30 disabled:hover:border-[#DDDDDD] disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95 bg-white"
+          >
+            <ChevronRight className="w-4 h-4 stroke-[2.2]" />
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stays.map((stay) => {
+      {/* 3 Stays Grid for current minipage */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-300">
+        {displayedStays.map((stay) => {
           const isSaved = !!savedStayIds[stay.id];
 
           return (
@@ -87,9 +132,10 @@ export const MoreStaysSection: React.FC<MoreStaysSectionProps> = ({ stays }) => 
                 <p className="text-xs text-[#717171] leading-tight">{stay.subtitle}</p>
                 <p className="text-xs text-[#717171]">{stay.dates}</p>
 
+                {/* Pricing in Indian Rupees ₹ */}
                 <div className="pt-1 text-sm">
                   <span className="font-extrabold text-[#222222]">
-                    ${stay.pricePerNight}
+                    ₹{stay.pricePerNight.toLocaleString('en-IN')}
                   </span>{' '}
                   <span className="text-[#222222] text-xs font-normal">night</span>
                 </div>

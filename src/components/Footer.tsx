@@ -91,13 +91,13 @@ export const Footer: React.FC = () => {
             className="flex items-center gap-2 hover:underline cursor-pointer"
           >
             <Globe className="w-4 h-4" />
-            <span>English (US)</span>
+            <span>English (IN)</span>
           </button>
           <button
             onClick={() => alert('Currency options')}
             className="hover:underline cursor-pointer"
           >
-            $ USD
+            ₹ INR
           </button>
         </div>
       </div>

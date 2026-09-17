@@ -24,10 +24,15 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
 
   return (
     <section id="host-section" className="py-8 border-b border-[#EBEBEB]">
-      {/* Host Card */}
-      <div className="bg-[#F7F7F7] border border-[#EBEBEB] rounded-3xl p-8 mb-6">
+      {/* Section Title (Change #5) */}
+      <h2 className="text-[22px] font-bold text-[#222222] mb-6">
+        Meet your host
+      </h2>
+
+      {/* Host Card: Completely about the host */}
+      <div className="bg-[#F7F7F7] border border-[#EBEBEB] rounded-3xl p-8 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          {/* Left: Avatar & Badge */}
+          {/* Left: Avatar, Superhost Badge & Stats */}
           <div className="md:col-span-5 flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-[#EBEBEB]">
             <div className="relative mb-3">
               <img
@@ -44,27 +49,6 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
 
             <h3 className="text-2xl font-bold text-[#222222]">{host.name}</h3>
             <p className="text-sm font-semibold text-[#717171] mt-0.5">Superhost</p>
-
-            {/* Co-hosts mini preview in the left card (Change #16) */}
-            {host.coHosts && host.coHosts.length > 0 && (
-              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-[#EBEBEB] w-full justify-center">
-                <span className="text-xs font-semibold text-[#717171]">Co-hosts:</span>
-                <div className="flex -space-x-2 overflow-hidden">
-                  {host.coHosts.map((c, i) => (
-                    <img
-                      key={i}
-                      src={c.avatar}
-                      alt={c.name}
-                      title={`${c.name} (${c.role || 'Co-Host'})`}
-                      className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
-                    />
-                  ))}
-                </div>
-                <span className="text-xs font-medium text-[#222222]">
-                  {host.coHosts.map((c) => c.name).join(', ')}
-                </span>
-              </div>
-            )}
 
             {/* Quick stats in card */}
             <div className="grid grid-cols-3 divide-x divide-[#EBEBEB] w-full pt-6 mt-4 border-t border-[#EBEBEB] text-center">
@@ -86,7 +70,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
             </div>
           </div>
 
-          {/* Right: Details & Bio */}
+          {/* Right: Details, Bio & Message Host Option */}
           <div className="md:col-span-7 space-y-4">
             <h4 className="font-bold text-lg text-[#222222]">Host details</h4>
             <div className="space-y-2 text-sm text-[#222222]">
@@ -110,40 +94,46 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
               {host.bio}
             </p>
 
-            {/* Co-hosts section with images and names (Change #16) */}
-            {host.coHosts && host.coHosts.length > 0 && (
-              <div className="pt-3 border-t border-[#EBEBEB]">
-                <h5 className="font-bold text-sm text-[#222222] mb-3">Co-hosts</h5>
-                <div className="flex flex-wrap gap-4">
-                  {host.coHosts.map((cohost, idx) => (
-                    <div key={idx} className="flex items-center gap-3">
-                      <img
-                        src={cohost.avatar}
-                        alt={cohost.name}
-                        className="w-10 h-10 rounded-full object-cover border border-[#DDDDDD]"
-                      />
-                      <div>
-                        <div className="text-sm font-semibold text-[#222222]">{cohost.name}</div>
-                        <div className="text-xs text-[#717171]">{cohost.role || 'Co-Host'}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <button
-              onClick={() => setIsContactModalOpen(true)}
-              className="mt-2 bg-white hover:bg-[#F7F7F7] text-[#222222] border border-[#222222] font-semibold text-sm px-6 py-3 rounded-lg transition-colors cursor-pointer active:scale-98"
-            >
-              Contact Host
-            </button>
+            <div className="pt-2">
+              <button
+                onClick={() => setIsContactModalOpen(true)}
+                className="bg-white hover:bg-[#F7F7F7] text-[#222222] border border-[#222222] font-semibold text-sm px-6 py-3 rounded-xl transition-colors cursor-pointer active:scale-98 flex items-center gap-2"
+              >
+                <MessageSquare className="w-4 h-4 text-[#222222]" />
+                <span>Message host</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Below: Completely about the Co-hosts (Change #5) */}
+      {host.coHosts && host.coHosts.length > 0 && (
+        <div className="mb-8 pt-4">
+          <h3 className="font-bold text-lg text-[#222222] mb-4">Co-hosts</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {host.coHosts.map((cohost, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-3.5 p-4 rounded-2xl border border-[#EBEBEB] bg-[#FAFAFA]"
+              >
+                <img
+                  src={cohost.avatar}
+                  alt={cohost.name}
+                  className="w-12 h-12 rounded-full object-cover border border-[#DDDDDD] shadow-xs shrink-0"
+                />
+                <div>
+                  <div className="text-base font-semibold text-[#222222]">{cohost.name}</div>
+                  <div className="text-xs text-[#717171] font-medium">{cohost.role || 'Co-host'}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Security notice */}
-      <div className="flex items-start gap-3 text-xs text-[#717171]">
+      <div className="flex items-start gap-3 text-xs text-[#717171] pt-2">
         <ShieldCheck className="w-5 h-5 text-[#FF385C] shrink-0" />
         <p>
           To protect your payment, never transfer money or communicate outside of the Airbnb website or app.
@@ -171,7 +161,7 @@ export const HostSection: React.FC<HostSectionProps> = ({ host }) => {
                 </div>
                 <h4 className="font-bold text-lg text-[#222222]">Message sent!</h4>
                 <p className="text-sm text-[#717171]">
-                  Elena usually responds within an hour. You'll receive an email notification when they reply.
+                  {host.name} usually responds within an hour. You'll receive an email notification when they reply.
                 </p>
               </div>
             ) : (

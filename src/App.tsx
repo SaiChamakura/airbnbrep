@@ -8,7 +8,7 @@ import { PropertyOverview } from './components/PropertyOverview';
 import { SleepingArrangements } from './components/SleepingArrangements';
 import { AmenitiesSection } from './components/AmenitiesSection';
 import { CalendarSection } from './components/CalendarSection';
-import { BookingCard } from './components/BookingCard';
+import { ReserveModal } from './components/ReserveModal';
 import { GuestFavoriteSection } from './components/GuestFavoriteSection';
 import { ReviewsSection } from './components/ReviewsSection';
 import { LocationSection } from './components/LocationSection';
@@ -53,6 +53,7 @@ export const App: React.FC = () => {
   const [isPhotoTourOpen, setIsPhotoTourOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,13 +127,6 @@ export const App: React.FC = () => {
     setCheckOutDate(null);
   };
 
-  const scrollToBookingCard = () => {
-    const el = document.getElementById('booking-card-wrapper');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   const handleNavigateSection = (sectionId: string) => {
     if (sectionId === 'photos') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -153,6 +147,21 @@ export const App: React.FC = () => {
     }
   };
 
+  // Calculate nights and price for reserve modal
+  const nightsCount =
+    checkInDate && checkOutDate
+      ? Math.max(
+          1,
+          Math.round(
+            (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
+          )
+        )
+      : 5;
+  const basePrice = listingData.pricePerNight * nightsCount;
+  const cleaningFee = listingData.cleaningFee || 3500;
+  const serviceFee = listingData.serviceFee || 4200;
+  const totalPrice = basePrice + cleaningFee + serviceFee;
+
   return (
     <div className="min-h-screen bg-white text-[#222222] flex flex-col selection:bg-[#FF385C]/20 selection:text-[#FF385C]">
       {/* Primary Header with Scrolled Upper Bar Transformation (Change #9) */}
@@ -164,7 +173,7 @@ export const App: React.FC = () => {
         pricePerNight={listingData.pricePerNight}
         rating={listingData.rating}
         reviewCount={listingData.reviewCount}
-        onReserveClick={scrollToBookingCard}
+        onReserveClick={() => setIsReserveModalOpen(true)}
       />
 
       {/* Main Page Container */}
@@ -184,43 +193,25 @@ export const App: React.FC = () => {
           onOpenLightbox={handleOpenLightbox}
         />
 
-        {/* 2-Column Content Layout: Left Details vs Right Sticky Booking Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative pb-8">
-          {/* Left Column (7 cols on lg screens) */}
-          <div className="lg:col-span-7 space-y-2">
-            {/* Property Overview, Host, Highlights, Description (AirCover removed) */}
-            <PropertyOverview listing={listingData} />
+        {/* Main Details Section without redundant reserve & prices after dates (Change #3) */}
+        <div className="max-w-[850px] space-y-2 pb-8">
+          {/* Property Overview, Host, Highlights, Description */}
+          <PropertyOverview listing={listingData} />
 
-            {/* Sleeping arrangements with photos for each bedroom (Change #7) */}
-            <SleepingArrangements bedrooms={listingData.bedrooms} />
+          {/* Sleeping arrangements with photos for each bedroom */}
+          <SleepingArrangements bedrooms={listingData.bedrooms} />
 
-            {/* Amenities Section */}
-            <AmenitiesSection amenities={listingData.amenities} />
+          {/* Amenities Section */}
+          <AmenitiesSection amenities={listingData.amenities} />
 
-            {/* 2-Month Calendar & Date Picker with Connected Range Bands (Change #8) */}
-            <CalendarSection
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              onSelectDate={handleDateSelection}
-              onClearDates={handleClearDates}
-              city={listingData.city}
-            />
-          </div>
-
-          {/* Right Column: Sticky Booking Widget (5 cols on lg screens) */}
-          <div id="booking-card-wrapper" className="lg:col-span-5 relative">
-            <BookingCard
-              listing={listingData}
-              checkInDate={checkInDate}
-              checkOutDate={checkOutDate}
-              onOpenCalendar={() => {
-                const el = document.getElementById('calendar-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              guests={guests}
-              onUpdateGuests={setGuests}
-            />
-          </div>
+          {/* 2-Month Calendar & Date Picker with Connected Range Bands */}
+          <CalendarSection
+            checkInDate={checkInDate}
+            checkOutDate={checkOutDate}
+            onSelectDate={handleDateSelection}
+            onClearDates={handleClearDates}
+            city={listingData.city}
+          />
         </div>
 
         {/* Huge Guest Favorite Section after check-in date section (Change #10) */}
@@ -271,6 +262,18 @@ export const App: React.FC = () => {
           <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Interactive Reservation Flow Modal */}
+      <ReserveModal
+        isOpen={isReserveModalOpen}
+        onClose={() => setIsReserveModalOpen(false)}
+        listing={listingData}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        guests={guests}
+        totalPrice={totalPrice}
+        nightsCount={nightsCount}
+      />
 
       {/* View 2: Full-screen Photo Tour Modal */}
       <PhotoTourModal

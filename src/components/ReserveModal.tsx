@@ -91,7 +91,7 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
                 </div>
                 <div className="flex justify-between font-bold text-base text-[#222222] pt-2 border-t border-[#EBEBEB]">
                   <span>Total charged:</span>
-                  <span>${totalPrice}</span>
+                  <span>₹{totalPrice.toLocaleString('en-IN')}</span>
                 </div>
               </div>
               <button
@@ -150,24 +150,24 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
               <div className="border-t border-[#EBEBEB] pt-4 space-y-2 text-sm text-[#222222]">
                 <h4 className="font-bold text-base mb-2">Price details</h4>
                 <div className="flex justify-between">
-                  <span className="underline">${listing.pricePerNight} x {nightsCount} nights</span>
-                  <span>${listing.pricePerNight * nightsCount}</span>
+                  <span className="underline">₹{listing.pricePerNight.toLocaleString('en-IN')} x {nightsCount} nights</span>
+                  <span>₹{(listing.pricePerNight * nightsCount).toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="underline">Cleaning fee</span>
-                  <span>${listing.cleaningFee}</span>
+                  <span>₹{listing.cleaningFee.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="underline">Airbnb service fee</span>
-                  <span>${listing.serviceFee}</span>
+                  <span>₹{listing.serviceFee.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="underline">Taxes</span>
-                  <span>${listing.taxes}</span>
+                  <span>₹{listing.taxes.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between font-bold text-base pt-3 border-t border-[#EBEBEB]">
-                  <span>Total (USD)</span>
-                  <span>${totalPrice}</span>
+                  <span>Total (INR)</span>
+                  <span>₹{totalPrice.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
@@ -180,7 +180,7 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
                 onClick={() => setIsConfirmed(true)}
                 className="w-full bg-gradient-to-r from-[#E61E4D] via-[#E31C5F] to-[#D70466] hover:opacity-95 text-white font-semibold py-3.5 rounded-xl transition-opacity text-base shadow-md cursor-pointer"
               >
-                Confirm reservation · ${totalPrice}
+                Confirm reservation · ₹{totalPrice.toLocaleString('en-IN')}
               </button>
             </>
           )}

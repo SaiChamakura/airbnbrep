@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Plus, Minus, Compass, Navigation, Search, Utensils, Landmark, Waves, Moon, X } from 'lucide-react';
+import { MapPin, Plus, Minus, Compass, Navigation, Search, X, ChevronRight } from 'lucide-react';
 
 interface LocationSectionProps {
   neighborhood: string;
@@ -16,49 +16,21 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
 }) => {
   const [zoomLevel, setZoomLevel] = useState(14);
   const [mapType, setMapType] = useState<'map' | 'satellite'>('map');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isNeighborhoodModalOpen, setIsNeighborhoodModalOpen] = useState(false);
 
-  const places = [
-    { name: 'Vagator Beach & Red Cliffs', type: 'beach', dist: '5 min drive (1.8 km)' },
-    { name: 'Chapora Portuguese Fort', type: 'landmark', dist: '7 min drive (2.4 km)' },
-    { name: 'Thalassa Waterfront Greek Dining', type: 'dining', dist: '8 min drive (2.8 km)' },
-    { name: 'HillTop Iconic Palm Grove', type: 'nightlife', dist: '4 min drive (1.2 km)' },
-    { name: 'Anjuna Flea Market & Curlies', type: 'beach', dist: '10 min drive (3.6 km)' },
-  ];
+  const neighborhoodText = `The villa is nestled in a peaceful private lane of Ozran, Little Vagator, surrounded by swaying coconut palms and old Portuguese banyan trees. Located just a 5-minute walk from the red volcanic cliffs and sunset viewpoints overlooking the Arabian Sea, you are moments away from Goa's finest coastal dining, including Greek taverna Thalassa, Antares, and Olive Bar & Kitchen.
 
-  const filteredPlaces = places.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+The neighborhood retains authentic Goan susegad charm with sleepy village lanes, artisanal cafes, yoga shalas, and morning bakeries delivering fresh wood-fired poi. Chapora Fort, made famous in Bollywood cinema, is just around the bluff with 360-degree panoramic ocean and river views.`;
+
+  const gettingAroundText = `Getting around Vagator and North Goa is effortless. Renting a scooter or self-drive car is the most popular way to explore nearby beaches like Anjuna, Morjim, and Ashwem. Taxis and private chauffeurs can be arranged anytime by our villa manager. Goa International Airport (MOPA) is approximately 50 minutes away, while Dabolim Airport is 75 minutes away.`;
 
   return (
     <section id="location-section" className="py-8 border-b border-[#EBEBEB]">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-        <div>
-          <h2 className="text-[22px] font-bold text-[#222222]">Where you'll be</h2>
-          <p className="text-base text-[#717171] mt-0.5">
-            {neighborhood}, {city}, {state}, {country}
-          </p>
-        </div>
-
-        {/* Location Search Bar (Change #14) */}
-        <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-[#717171] absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search nearby places..."
-            className="w-full bg-[#F7F7F7] border border-[#DDDDDD] rounded-full pl-10 pr-9 py-2 text-sm text-[#222222] focus:outline-hidden focus:border-[#222222] transition-colors"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-neutral-400 hover:text-neutral-700 cursor-pointer"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
+      <div className="mb-4">
+        <h2 className="text-[22px] font-bold text-[#222222]">Where you'll be</h2>
+        <p className="text-base text-[#717171] mt-0.5">
+          {neighborhood}, {city}, {state}, {country}
+        </p>
       </div>
 
       {/* Stylized Interactive Map Container */}
@@ -178,37 +150,61 @@ export const LocationSection: React.FC<LocationSectionProps> = ({
         </div>
       </div>
 
-      {/* Neighborhood Description */}
-      <div className="mt-6 space-y-2">
-        <h3 className="font-bold text-base text-[#222222]">{neighborhood}</h3>
-        <p className="text-sm text-[#717171] leading-relaxed">
-          The villa is situated in a tranquil cul-de-sac of Ozran, overlooking lush coconut palms and just minutes away from the famous cliffs of Little Vagator. Renowned sunset spots, Greek taverna Thalassa, Antares Restaurant, and the historic Chapora Fort are right at your doorstep, while retaining complete private seclusion.
-        </p>
+      {/* Neighborhood Highlights in pure Text format with Show More (Change #4) */}
+      <div className="mt-8 space-y-3">
+        <h3 className="font-bold text-base text-[#222222]">{neighborhood}, {state}, {country}</h3>
+        <div className="relative">
+          <p className="text-base text-[#222222] leading-relaxed max-h-[105px] overflow-hidden">
+            {neighborhoodText}
+          </p>
+          {/* Fading effect matching About this space */}
+          <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+        </div>
+
+        <button
+          onClick={() => setIsNeighborhoodModalOpen(true)}
+          className="flex items-center gap-1 text-base font-bold text-[#222222] underline underline-offset-4 hover:opacity-80 pt-1 cursor-pointer"
+        >
+          <span>Show more</span>
+          <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+        </button>
       </div>
 
-      {/* Neighborhood Highlights Section (Change #15) */}
-      <div className="mt-8 pt-6 border-t border-[#EBEBEB]">
-        <h3 className="font-bold text-lg text-[#222222] mb-4">Neighborhood highlights</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredPlaces.map((place, idx) => (
-            <div
-              key={idx}
-              className="p-4 rounded-xl border border-[#EBEBEB] bg-[#FAFAFA] hover:border-neutral-400 transition-colors flex items-start gap-3"
-            >
-              <div className="p-2 rounded-lg bg-white shadow-xs text-[#222222] shrink-0 mt-0.5">
-                {place.type === 'beach' && <Waves className="w-4 h-4 text-sky-600" />}
-                {place.type === 'landmark' && <Landmark className="w-4 h-4 text-amber-700" />}
-                {place.type === 'dining' && <Utensils className="w-4 h-4 text-rose-600" />}
-                {place.type === 'nightlife' && <Moon className="w-4 h-4 text-purple-600" />}
-              </div>
+      {/* Neighborhood Modal */}
+      {isNeighborhoodModalOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setIsNeighborhoodModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-6 border-b border-[#EBEBEB]">
+              <h2 className="text-xl font-bold text-[#222222]">Where you'll be</h2>
+              <button
+                onClick={() => setIsNeighborhoodModalOpen(false)}
+                className="p-2 hover:bg-[#F7F7F7] rounded-full transition-colors cursor-pointer"
+                aria-label="Close dialog"
+              >
+                <X className="w-5 h-5 text-[#222222]" />
+              </button>
+            </div>
+
+            <div className="py-6 space-y-6 text-[#222222] text-base leading-relaxed">
               <div>
-                <h4 className="font-semibold text-sm text-[#222222]">{place.name}</h4>
-                <p className="text-xs text-[#717171] mt-0.5">{place.dist}</p>
+                <h3 className="font-bold text-lg mb-3">Neighborhood highlights</h3>
+                <p className="whitespace-pre-line text-[#484848]">{neighborhoodText}</p>
+              </div>
+
+              <div className="border-t border-[#EBEBEB] pt-6">
+                <h3 className="font-bold text-lg mb-3">Getting around</h3>
+                <p className="whitespace-pre-line text-[#484848]">{gettingAroundText}</p>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };
