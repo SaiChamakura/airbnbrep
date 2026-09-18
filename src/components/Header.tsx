@@ -68,16 +68,23 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex-initial transition-opacity duration-200">
             <button
               onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-              className="flex items-center text-sm font-normal border border-[#DDDDDD] rounded-full py-2 pl-4 pr-2 shadow-xs hover:shadow-md transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
+              className="flex items-center text-sm font-normal border border-[#DDDDDD] rounded-full py-2 pl-3 pr-2 shadow-xs hover:shadow-md transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222] gap-2"
               aria-label="Search destinations, dates, and guests"
             >
-              <span className="font-medium text-[#222222] pr-3.5 border-r border-[#EBEBEB]">
+              {/* House icon matching Airbnb header style */}
+              <div className="w-6 h-6 flex items-center justify-center text-[#222222] bg-[#F7F7F7] rounded-full shrink-0">
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H4a1 1 0 0 1-1-1v-9.5z" />
+                </svg>
+              </div>
+
+              <span className="font-medium text-[#222222] pr-3 border-r border-[#EBEBEB]">
                 Anywhere
               </span>
-              <span className="font-medium text-[#222222] px-3.5 border-r border-[#EBEBEB]">
+              <span className="font-medium text-[#222222] px-3 border-r border-[#EBEBEB]">
                 Anytime
               </span>
-              <span className="text-[#717171] font-normal pl-3.5 pr-2">Add guests</span>
+              <span className="text-[#717171] font-normal pl-3 pr-1">Add guests</span>
               <div className="bg-[#FF385C] text-white p-2 rounded-full ml-1">
                 <Search className="w-3 h-3 stroke-[3]" />
               </div>
