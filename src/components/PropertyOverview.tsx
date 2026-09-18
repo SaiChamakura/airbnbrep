@@ -34,23 +34,23 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
 
       {/* Official Airbnb Guest Favorite Banner */}
       {listing.isGuestFavorite && (
-        <div className="border border-[#DDDDDD] rounded-2xl p-5 flex items-center justify-between bg-white shadow-xs hover:border-[#B0B0B0] transition-colors">
-          <div className="flex items-center gap-3">
-            <LaurelBranchLeft className="w-6 h-10 text-[#222222] shrink-0" />
+        <div className="border border-[#DDDDDD] rounded-2xl p-5 sm:p-6 flex items-center justify-between bg-white shadow-xs hover:border-[#B0B0B0] transition-colors">
+          <div className="flex items-center gap-4">
+            <LaurelBranchLeft className="w-10 h-16 sm:w-12 sm:h-20 text-[#222222] shrink-0" />
             <div>
-              <div className="font-extrabold text-[#222222] text-lg leading-tight">
+              <div className="font-extrabold text-[#222222] text-xl leading-tight">
                 Guest favourite
               </div>
-              <p className="text-sm text-[#717171] leading-snug mt-0.5">
+              <p className="text-sm text-[#717171] leading-snug mt-0.5 max-w-sm">
                 One of the most loved homes on Airbnb, according to guests
               </p>
             </div>
-            <LaurelBranchRight className="w-6 h-10 text-[#222222] shrink-0" />
+            <LaurelBranchRight className="w-10 h-16 sm:w-12 sm:h-20 text-[#222222] shrink-0" />
           </div>
 
           <div className="flex items-center gap-4 pl-4 shrink-0 text-right">
             <div>
-              <div className="text-2xl font-black text-[#222222]">
+              <div className="text-2xl sm:text-3xl font-black text-[#222222]">
                 {listing.rating.toFixed(2)}
               </div>
               <div className="flex items-center justify-end gap-0.5 mt-0.5">
@@ -61,7 +61,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
             </div>
             <div className="h-8 w-px bg-[#DDDDDD]" />
             <div>
-              <div className="text-xl font-bold text-[#222222]">{listing.reviewCount}</div>
+              <div className="text-xl sm:text-2xl font-bold text-[#222222]">{listing.reviewCount}</div>
               <div className="text-xs text-[#717171] underline cursor-pointer">Reviews</div>
             </div>
           </div>

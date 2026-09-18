@@ -21,22 +21,22 @@ export const GuestFavoriteSection: React.FC<GuestFavoriteSectionProps> = ({
   ratingsBreakdown,
 }) => {
   return (
-    <section className="pt-12 pb-6 border-b border-[#EBEBEB]">
-      {/* Huge Guest Favorite Centerpiece with Authentic Laurel Wreath */}
-      <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto mb-10">
-        <div className="flex items-center justify-center gap-3 md:gap-5 text-[#222222] mb-3">
-          <LaurelBranchLeft className="w-10 h-16 md:w-14 md:h-24 text-[#222222]" />
-          <div className="text-6xl md:text-7xl font-extrabold tracking-tight text-[#222222] px-2 font-serif select-none">
+    <section className="pt-14 pb-8 border-b border-[#EBEBEB]">
+      {/* Prominent Guest Favorite Centerpiece with Large Laurel Wreaths */}
+      <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto mb-12">
+        <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 text-[#222222] mb-4">
+          <LaurelBranchLeft className="w-20 h-32 sm:w-28 sm:h-44 md:w-36 md:h-56 text-[#222222]" />
+          <div className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight text-[#222222] px-2 font-serif select-none leading-none">
             {rating.toFixed(2)}
           </div>
-          <LaurelBranchRight className="w-10 h-16 md:w-14 md:h-24 text-[#222222]" />
+          <LaurelBranchRight className="w-20 h-32 sm:w-28 sm:h-44 md:w-36 md:h-56 text-[#222222]" />
         </div>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-[#222222] mb-2">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#222222] mb-2 tracking-tight">
           Guest favourite
         </h2>
 
-        <p className="text-base text-[#717171] max-w-md mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-[#717171] max-w-lg mx-auto leading-relaxed">
           This home is a guest favourite based on ratings, reviews and reliability
         </p>
 
