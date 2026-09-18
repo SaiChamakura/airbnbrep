@@ -26,13 +26,13 @@ export const GuestFavoriteSection: React.FC<GuestFavoriteSectionProps> = ({
       <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto mb-12">
         <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 text-[#222222] mb-4">
           <LaurelBranchLeft className="w-20 h-32 sm:w-28 sm:h-44 md:w-36 md:h-56 text-[#222222]" />
-          <div className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tight text-[#222222] px-2 font-serif select-none leading-none">
+          <div className="text-7xl sm:text-8xl md:text-9xl font-semibold tracking-tight text-[#222222] px-2 select-none leading-none">
             {rating.toFixed(2)}
           </div>
           <LaurelBranchRight className="w-20 h-32 sm:w-28 sm:h-44 md:w-36 md:h-56 text-[#222222]" />
         </div>
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#222222] mb-2 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#222222] mb-2 tracking-tight">
           Guest favourite
         </h2>
 

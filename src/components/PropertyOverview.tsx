@@ -18,7 +18,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
     <div className="space-y-6">
       {/* Property Title & Room counts */}
       <div className="pb-6 border-b border-[#EBEBEB]">
-        <h2 className="text-[22px] font-bold text-[#222222]">
+        <h2 className="text-[22px] font-semibold text-[#222222]">
           {listing.propertyType} in {listing.city}, {listing.country}
         </h2>
         <ol className="flex items-center gap-1.5 text-sm text-[#222222] mt-1 list-none p-0 font-normal">
@@ -38,7 +38,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
           {/* Left: Laurel Wreath flanking "Guest favourite" badge */}
           <div className="flex items-center gap-1.5 shrink-0">
             <LaurelBranchLeft className="w-7 h-12 text-[#222222] shrink-0" />
-            <div className="font-bold text-[#222222] text-base leading-tight text-center select-none px-1">
+            <div className="font-semibold text-[#222222] text-base leading-tight text-center select-none px-1">
               <div>Guest</div>
               <div>favourite</div>
             </div>
@@ -53,7 +53,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
           {/* Right: Rating & Review stats */}
           <div className="flex items-center gap-6 shrink-0 self-end sm:self-center">
             <div className="text-center">
-              <div className="text-xl font-bold text-[#222222] leading-none">
+              <div className="text-xl font-semibold text-[#222222] leading-none">
                 {listing.rating.toFixed(2)}
               </div>
               <div className="flex items-center justify-center gap-0.5 mt-1.5">
@@ -66,7 +66,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
             <div className="h-9 w-px bg-[#DDDDDD]" />
 
             <div className="text-center">
-              <div className="text-xl font-bold text-[#222222] leading-none">
+              <div className="text-xl font-semibold text-[#222222] leading-none">
                 {listing.reviewCount}
               </div>
               <div className="text-xs text-[#222222] font-medium mt-1">
@@ -81,7 +81,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
       <div className="flex items-center gap-4 py-5 border-b border-[#EBEBEB]">
         <div className="relative shrink-0">
           <div className="w-14 h-14 rounded-full bg-[#18392b] text-[#f4e4c1] flex flex-col items-center justify-center p-1.5 border border-[#122b20] shadow-xs select-none">
-            <span className="text-[9px] font-black uppercase tracking-tighter text-center leading-tight">
+            <span className="text-[9px] font-bold uppercase tracking-tighter text-center leading-tight">
               MIRASHYA
             </span>
             <span className="text-[6.5px] uppercase tracking-widest text-[#d8c397]">
@@ -90,7 +90,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
           </div>
         </div>
         <div>
-          <h3 className="font-bold text-base text-[#222222]">
+          <h3 className="font-semibold text-base text-[#222222]">
             Hosted by {listing.host.name}
           </h3>
           <p className="text-sm text-[#717171]">
@@ -113,7 +113,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
               {highlight.icon === 'calendar' && <Calendar className="w-6 h-6 stroke-[1.8]" />}
             </div>
             <div>
-              <h3 className="font-semibold text-base text-[#222222] leading-snug">
+              <h3 className="font-medium text-base text-[#222222] leading-snug">
                 {highlight.title}
               </h3>
               <p className="text-sm text-[#717171] mt-0.5">{highlight.description}</p>
@@ -128,7 +128,7 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
         <button
           type="button"
           onClick={() => setIsShowingOriginal((prev) => !prev)}
-          className="font-bold underline text-[#222222] hover:text-black cursor-pointer inline transition-opacity"
+          className="font-medium underline text-[#222222] hover:text-black cursor-pointer inline transition-opacity"
         >
           {isShowingOriginal ? 'Show translated' : 'Show original'}
         </button>

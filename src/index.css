@@ -1,6 +1,39 @@
 @import "tailwindcss";
 
-/* Official Airbnb Cereal App Typography */
+/* Sharp Sans Display PE & Sharp Sans Webfonts */
+@font-face {
+  font-family: 'Sharp Sans Display PE';
+  src: url('https://db.onlinewebfonts.com/t/16e279d50baed10780eaa7386aba53d7.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sharp Sans Display PE';
+  src: url('https://db.onlinewebfonts.com/t/30bb285a0c5e40fc620a793eff494dfd.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sharp Sans Display PE';
+  src: url('https://db.onlinewebfonts.com/t/5e9a2dbc8b58dbc9010b238033a2dbb4.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sharp Sans Display PE';
+  src: url('https://db.onlinewebfonts.com/t/3cfb382332a297bd7471d4da4490513f.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback: Official Airbnb Cereal App Typography */
 @font-face {
   font-family: 'Airbnb Cereal App';
   src: url('https://cdn.jsdelivr.net/npm/airbnbcereal@1.1.0/AirbnbCerealApp-Light.woff2') format('woff2');
@@ -49,18 +82,31 @@
   font-display: swap;
 }
 
-@layer base {
-  *, ::before, ::after {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-  body {
-    font-family: 'Airbnb Cereal App', 'Airbnb Cereal', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    font-weight: 400;
-    color: #222222;
-    letter-spacing: -0.01em;
-  }
+/* Enforce Sharp Sans Display PE universally across every single element */
+*, *::before, *::after,
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video,
+input, button, select, textarea {
+  font-family: 'Sharp Sans Display PE', 'Sharp Sans Display', 'Sharp Sans', 'Airbnb Cereal App', 'Airbnb Cereal', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+body {
+  color: #222222;
+  letter-spacing: -0.012em;
 }
 
 /* Custom scrollbar styling for photo tour and modals */

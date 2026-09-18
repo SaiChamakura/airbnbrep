@@ -162,7 +162,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Page Container */}
-      <main className="flex-1 max-w-[1120px] w-full mx-auto px-6 sm:px-10 lg:px-12">
+      <main className="flex-1 max-w-[1280px] w-full mx-auto px-6 sm:px-10 lg:px-12">
         {/* Listing Title, Share & Save Buttons */}
         <PropertyHeader
           title={listingData.title}

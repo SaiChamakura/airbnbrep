@@ -18,7 +18,7 @@ export const PropertyHeader: React.FC<PropertyHeaderProps> = ({
     <section className="pt-6 pb-4">
       {/* Title and Action Buttons */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h1 className="text-[26px] font-semibold text-[#222222] tracking-tight leading-snug flex-1">
+        <h1 className="text-[26px] md:text-[28px] font-medium text-[#222222] tracking-tight leading-snug flex-1">
           {title}
         </h1>
 
