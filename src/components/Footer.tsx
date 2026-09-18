@@ -5,7 +5,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#F7F7F7] border-t border-[#DDDDDD] text-[#222222]">
       {/* Breadcrumb Navigation */}
-      <div className="max-w-[1280px] mx-auto px-6 xl:px-12 py-5 border-b border-[#EBEBEB]">
+      <div className="max-w-[1120px] mx-auto px-6 sm:px-10 lg:px-12 py-5 border-b border-[#EBEBEB]">
         <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-sm text-[#717171]">
           <a href="#" className="hover:underline hover:text-[#222222]">Airbnb</a>
           <ChevronRight className="w-3 h-3" />
@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* 4 Columns Links */}
-      <div className="max-w-[1280px] mx-auto px-6 xl:px-12 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div className="max-w-[1120px] mx-auto px-6 sm:px-10 lg:px-12 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
         {/* Support */}
         <div className="space-y-3">
           <h4 className="font-bold text-[#222222]">Support</h4>
@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Bottom Sub-bar */}
-      <div className="max-w-[1280px] mx-auto px-6 xl:px-12 py-6 border-t border-[#DDDDDD] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#222222]">
+      <div className="max-w-[1120px] mx-auto px-6 sm:px-10 lg:px-12 py-6 border-t border-[#DDDDDD] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#222222]">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-center md:text-left">
           <span>© 2026 Airbnb, Inc.</span>
           <span>·</span>

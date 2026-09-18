@@ -46,17 +46,17 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-[#EBEBEB] transition-all duration-200">
-      <div className="max-w-[1280px] mx-auto px-6 xl:px-12 h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-white border-b border-[#EBEBEB] w-full transition-all duration-200">
+      <div className="w-full px-6 sm:px-10 lg:px-20 xl:px-24 h-20 flex items-center justify-between">
         {/* Left: Authentic Airbnb Logo */}
         <div className="flex-1 flex items-center">
           <a
             href="/"
             aria-label="Airbnb homepage"
-            className="flex items-center gap-2 text-[#FF385C] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222] rounded-lg p-1 group"
+            className="flex items-center gap-1.5 text-[#FF385C] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222] rounded-lg p-1 group"
           >
             <AirbnbLogo className="w-8 h-8" />
-            <span className="text-[#FF385C] font-extrabold text-[22px] tracking-tight hidden sm:inline select-none">
+            <span className="text-[#FF385C] font-bold text-[21px] tracking-tight hidden sm:inline select-none">
               airbnb
             </span>
           </a>
@@ -68,18 +68,18 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex-initial transition-opacity duration-200">
             <button
               onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-              className="flex items-center text-sm font-medium border border-[#DDDDDD] rounded-full py-2.5 pl-5 pr-2.5 shadow-xs hover:shadow-md transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
+              className="flex items-center text-sm font-normal border border-[#DDDDDD] rounded-full py-2 pl-4 pr-2 shadow-xs hover:shadow-md transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
               aria-label="Search destinations, dates, and guests"
             >
-              <span className="font-semibold text-[#222222] pr-3.5 border-r border-[#EBEBEB]">
+              <span className="font-medium text-[#222222] pr-3.5 border-r border-[#EBEBEB]">
                 Anywhere
               </span>
-              <span className="font-semibold text-[#222222] px-3.5 border-r border-[#EBEBEB]">
-                Any week
+              <span className="font-medium text-[#222222] px-3.5 border-r border-[#EBEBEB]">
+                Anytime
               </span>
-              <span className="text-[#717171] pl-3.5 pr-2">Add guests</span>
+              <span className="text-[#717171] font-normal pl-3.5 pr-2">Add guests</span>
               <div className="bg-[#FF385C] text-white p-2 rounded-full ml-1">
-                <Search className="w-3.5 h-3.5 stroke-[2.8]" />
+                <Search className="w-3 h-3 stroke-[3]" />
               </div>
             </button>
           </div>
@@ -92,9 +92,9 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   key={tab.id}
                   onClick={() => onNavigate(tab.id)}
-                  className={`h-20 text-sm font-semibold transition-all relative flex items-center cursor-pointer ${
+                  className={`h-20 text-sm font-medium transition-all relative flex items-center cursor-pointer ${
                     isActive
-                      ? 'text-[#222222]'
+                      ? 'text-[#222222] font-semibold'
                       : 'text-[#717171] hover:text-[#222222]'
                   }`}
                 >
@@ -114,9 +114,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex-1 flex items-center justify-end gap-1">
             <a
               href="#host-section"
-              className="text-sm font-semibold text-[#222222] hover:bg-[#F7F7F7] px-3.5 py-2.5 rounded-full transition-colors hidden md:block"
+              className="text-sm font-medium text-[#222222] hover:bg-[#F7F7F7] px-3.5 py-2.5 rounded-full transition-colors hidden md:block"
             >
-              Airbnb your home
+              Become a host
             </a>
 
             <button
@@ -124,20 +124,20 @@ export const Header: React.FC<HeaderProps> = ({
               className="p-2.5 text-[#222222] hover:bg-[#F7F7F7] rounded-full transition-colors cursor-pointer"
               onClick={() => alert('Language: English (India) · Currency: INR (₹)')}
             >
-              <Globe className="w-4 h-4 stroke-[2]" />
+              <Globe className="w-4 h-4 stroke-[1.8]" />
             </button>
 
             {/* User Menu Dropdown */}
             <div className="relative" ref={menuRef}>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center gap-3 border border-[#DDDDDD] rounded-full pl-3.5 pr-1.5 py-1.5 hover:shadow-md transition-shadow cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
+                className="flex items-center gap-3 border border-[#DDDDDD] rounded-full pl-3.5 pr-1.5 py-1 hover:shadow-md transition-shadow cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#222222]"
                 aria-expanded={isMenuOpen}
                 aria-label="User navigation menu"
               >
-                <Menu className="w-4 h-4 text-[#222222] stroke-[2.2]" />
-                <div className="w-8 h-8 bg-[#717171] text-white rounded-full flex items-center justify-center overflow-hidden relative">
-                  <User className="w-5 h-5 fill-current text-white translate-y-0.5" />
+                <Menu className="w-4 h-4 text-[#222222] stroke-[2]" />
+                <div className="w-7 h-7 bg-[#717171] text-white rounded-full flex items-center justify-center overflow-hidden relative">
+                  <User className="w-4 h-4 fill-current text-white translate-y-0.5" />
                   {savedCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-[#FF385C] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold border-2 border-white">
                       {savedCount}

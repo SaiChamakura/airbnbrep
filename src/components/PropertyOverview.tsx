@@ -34,35 +34,44 @@ Fique neste aconchegante 1BHK no coração de Candolim, com jacuzzi privativa pa
 
       {/* Official Airbnb Guest Favorite Banner */}
       {listing.isGuestFavorite && (
-        <div className="border border-[#DDDDDD] rounded-2xl p-5 sm:p-6 flex items-center justify-between bg-white shadow-xs hover:border-[#B0B0B0] transition-colors">
-          <div className="flex items-center gap-4">
-            <LaurelBranchLeft className="w-10 h-16 sm:w-12 sm:h-20 text-[#222222] shrink-0" />
-            <div>
-              <div className="font-extrabold text-[#222222] text-xl leading-tight">
-                Guest favourite
-              </div>
-              <p className="text-sm text-[#717171] leading-snug mt-0.5 max-w-sm">
-                One of the most loved homes on Airbnb, according to guests
-              </p>
+        <div className="border border-[#DDDDDD] rounded-3xl p-5 sm:px-7 sm:py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 bg-white shadow-xs">
+          {/* Left: Laurel Wreath flanking "Guest favourite" badge */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <LaurelBranchLeft className="w-7 h-12 text-[#222222] shrink-0" />
+            <div className="font-bold text-[#222222] text-base leading-tight text-center select-none px-1">
+              <div>Guest</div>
+              <div>favourite</div>
             </div>
-            <LaurelBranchRight className="w-10 h-16 sm:w-12 sm:h-20 text-[#222222] shrink-0" />
+            <LaurelBranchRight className="w-7 h-12 text-[#222222] shrink-0" />
           </div>
 
-          <div className="flex items-center gap-4 pl-4 shrink-0 text-right">
-            <div>
-              <div className="text-2xl sm:text-3xl font-black text-[#222222]">
+          {/* Middle: Subtitle text */}
+          <div className="text-[15px] text-[#222222] font-normal leading-snug sm:max-w-[280px] md:max-w-xs lg:max-w-sm">
+            One of the most loved homes on Airbnb, according to guests
+          </div>
+
+          {/* Right: Rating & Review stats */}
+          <div className="flex items-center gap-6 shrink-0 self-end sm:self-center">
+            <div className="text-center">
+              <div className="text-xl font-bold text-[#222222] leading-none">
                 {listing.rating.toFixed(2)}
               </div>
-              <div className="flex items-center justify-end gap-0.5 mt-0.5">
+              <div className="flex items-center justify-center gap-0.5 mt-1.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3 h-3 fill-current text-[#222222]" />
+                  <Star key={i} className="w-2.5 h-2.5 fill-current text-[#222222]" />
                 ))}
               </div>
             </div>
-            <div className="h-8 w-px bg-[#DDDDDD]" />
-            <div>
-              <div className="text-xl sm:text-2xl font-bold text-[#222222]">{listing.reviewCount}</div>
-              <div className="text-xs text-[#717171] underline cursor-pointer">Reviews</div>
+
+            <div className="h-9 w-px bg-[#DDDDDD]" />
+
+            <div className="text-center">
+              <div className="text-xl font-bold text-[#222222] leading-none">
+                {listing.reviewCount}
+              </div>
+              <div className="text-xs text-[#222222] font-medium mt-1">
+                Reviews
+              </div>
             </div>
           </div>
         </div>
